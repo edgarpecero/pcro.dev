@@ -7,7 +7,7 @@ const routes = {
   "/about": true,
   "/work": true,
   "/blog": true,
-  "/gallery": true,
+  "/gallery": false,
 };
 
 // Enable password protection on selected routes
@@ -17,10 +17,10 @@ const protectedRoutes = {
 };
 
 const style = {
-  theme: Theme.Dark, // dark | light
+  theme: Theme.Dark, // Dark | Light
   neutral: Neutral.Gray, // sand | gray | slate
-  brand: Brand.Magenta, // blue | indigo | violet | magenta | pink | red | orange | yellow | moss | green | emerald | aqua | cyan
-  ccent: Colors.Aqua, // blue | indigo | violet | magenta | pink | red | orange | yellow | moss | green | emerald | aqua | cyan
+  brand: Brand.Moss, // Blue | Indigo | Violet | Magenta | pink | Red | Orange | Yellow | Moss | Green | Emerald | Aqua | Cyan
+  accent: Colors.Emerald, // Blue | Indigo | Violet | Magenta | pink | Red | Orange | Yellow | Moss | Green | Emerald | Aqua | Cyan
   solid: Solid.Contrast, // color | contrast
   solidStyle: SolidStyle.Flat, // flat | plastic
   border: Border.Playful,// rounded | playful | conservative
@@ -66,7 +66,7 @@ const effects = {
 
 const display = {
   location: true,
-  time: true,
+  time: false,
 };
 
 const mailchimp = {

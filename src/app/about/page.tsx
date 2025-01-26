@@ -13,7 +13,14 @@ import {
 import { baseURL } from "@/app/resources";
 import TableOfContents from "@/components/about/TableOfContents";
 import styles from "@/components/about/about.module.scss";
-import { person, about, social } from "@/app/resources/content";
+import { person, about, social, structure } from "@/app/resources/content";
+import { ImageContent } from "../resources/types";
+
+const styleConfig = {
+  heading: {
+    marginBottom: "s",
+  }
+}
 
 export async function generateMetadata() {
   const title = about.title;
@@ -45,28 +52,7 @@ export async function generateMetadata() {
 }
 
 export default function About() {
-  const structure = [
-    {
-      title: about.intro.title,
-      display: about.intro.display,
-      items: [],
-    },
-    {
-      title: about.work.title,
-      display: about.work.display,
-      items: about.work.experiences.map((experience) => experience.company),
-    },
-    {
-      title: about.studies.title,
-      display: about.studies.display,
-      items: about.studies.institutions.map((institution) => institution.name),
-    },
-    {
-      title: about.technical.title,
-      display: about.technical.display,
-      items: about.technical.skills.map((skill) => skill.title),
-    },
-  ];
+
   return (
     <Column maxWidth="m">
       <script
@@ -91,6 +77,8 @@ export default function About() {
           }),
         }}
       />
+
+      {/* Table of contents */}
       {about.tableOfContent.display && (
         <Column
           left="0"
@@ -103,7 +91,11 @@ export default function About() {
           <TableOfContents structure={structure} about={about} />
         </Column>
       )}
+
+      {/* Main Avatar content */}
       <Flex fillWidth mobileDirection="column" horizontal="center">
+
+        {/* Fixed content */}
         {about.avatar.display && (
           <Column
             className={styles.avatar}
@@ -119,6 +111,8 @@ export default function About() {
               <Icon onBackground="accent-weak" name="globe" />
               {person.location}
             </Flex>
+
+            {/* Avatar Languages */}
             {person.languages.length > 0 && (
               <Flex wrap gap="8">
                 {person.languages.map((language, index) => (
@@ -128,8 +122,32 @@ export default function About() {
                 ))}
               </Flex>
             )}
+
+            {/* Avatar Skills */}
+            {/* <Column as="ul">
+              {Object.entries(about.avatar.skills).map(([category, skillList]) => (
+                <>
+                  <Text variant="body-default-s" onBackground="brand-weak" marginBottom="s">
+                    {category}
+                  </Text>
+                  {(skillList || []).map((skill: string, index: number) => (
+                    <Text
+                      as="li"
+                      size={"xs"}
+                      variant="body-default-s"
+                      key={`${skill}-${index}`}
+                    >
+                      {skill}
+                    </Text>
+                  ))}
+                </>
+              ))}
+            </Column> */}
+
           </Column>
         )}
+
+        {/* Main content*/}
         <Column className={styles.blockAlign} flex={9} maxWidth={40}>
           <Column
             id={about.intro.title}
@@ -138,6 +156,7 @@ export default function About() {
             vertical="center"
             marginBottom="32"
           >
+            {/* Schedule a call */}
             {about.calendar.display && (
               <Flex
                 fitWidth
@@ -163,7 +182,9 @@ export default function About() {
                 />
               </Flex>
             )}
-            <Heading className={styles.textAlign} variant="display-strong-xl">
+
+            {/* Person */}
+            <Heading className={styles.textAlign} variant="display-strong-xl" marginBottom="xs">
               {person.name}
             </Heading>
             <Text
@@ -173,6 +194,8 @@ export default function About() {
             >
               {person.role}
             </Text>
+
+            {/* Social icons*/}
             {social.length > 0 && (
               <Flex className={styles.blockAlign} paddingTop="20" paddingBottom="8" gap="8" wrap>
                 {social.map(
@@ -192,33 +215,51 @@ export default function About() {
             )}
           </Column>
 
+          {/* Introduction */}
           {about.intro.display && (
-            <Column textVariant="body-default-l" fillWidth gap="m" marginBottom="xl">
+            <Column textVariant="body-default-l" fillWidth gap="m" marginBottom="l">
               {about.intro.description}
             </Column>
           )}
 
+          {/* Work Experience */}
           {about.work.display && (
             <>
-              <Heading as="h2" id={about.work.title} variant="display-strong-s" marginBottom="m">
+              {/* Work title */}
+              <Heading as="h2" id={about.work.title} variant="display-strong-s" >
                 {about.work.title}
               </Heading>
-              <Column fillWidth gap="l" marginBottom="40">
+
+              <Column fillWidth marginBottom="40">
+
+                {/* Work experiences */}
                 {about.work.experiences.map((experience, index) => (
                   <Column key={`${experience.company}-${experience.role}-${index}`} fillWidth>
-                    <Flex fillWidth horizontal="space-between" vertical="end" marginBottom="4">
-                      <Text id={experience.company} variant="heading-strong-l">
-                        {experience.company}
-                      </Text>
-                      <Text variant="heading-default-xs" onBackground="neutral-weak">
-                        {experience.timeframe}
-                      </Text>
+                    <Flex fillWidth horizontal="space-between" vertical="end" marginBottom="m">
+
+                      {/* Company Name*/}
+                      {experience?.company && (
+                        <Text id={experience.company} variant="heading-strong-l" marginTop="l">
+                          {experience.company}
+                        </Text>
+                      )}
+
+                      {/* Work Experience Timeframe */}
+                      {experience?.timeframe && (
+                        <Text variant="heading-default-xs" onBackground="neutral-weak">
+                          {experience.timeframe}
+                        </Text>
+                      )}
                     </Flex>
-                    <Text variant="body-default-s" onBackground="brand-weak" marginBottom="m">
+
+                    {/* Work Experience Role */}
+                    <Text variant="body-default-m" onBackground="brand-weak" marginBottom="s">
                       {experience.role}
                     </Text>
-                    <Column as="ul" gap="16">
-                      {experience.achievements.map((achievement: JSX.Element, index: number) => (
+
+                    {/* Work Experience Achievements */}
+                    <Column as="ul">
+                      {(experience?.achievements || []).map((achievement: JSX.Element, index: number) => (
                         <Text
                           as="li"
                           variant="body-default-m"
@@ -228,9 +269,11 @@ export default function About() {
                         </Text>
                       ))}
                     </Column>
-                    {experience.images.length > 0 && (
+
+                    {/* Work Experience Images */}
+                    {experience?.images.length > 0 && (
                       <Flex fillWidth paddingTop="m" paddingLeft="40" wrap>
-                        {experience.images.map((image, index) => (
+                        {experience.images.map((image: ImageContent, index) => (
                           <Flex
                             key={index}
                             border="neutral-medium"
@@ -255,17 +298,33 @@ export default function About() {
             </>
           )}
 
+          {/* Studies */}
           {about.studies.display && (
             <>
               <Heading as="h2" id={about.studies.title} variant="display-strong-s" marginBottom="m">
                 {about.studies.title}
               </Heading>
+
+              {/* Institutions */}
               <Column fillWidth gap="l" marginBottom="40">
                 {about.studies.institutions.map((institution, index) => (
                   <Column key={`${institution.name}-${index}`} fillWidth gap="4">
-                    <Text id={institution.name} variant="heading-strong-l">
-                      {institution.name}
-                    </Text>
+                    <Flex fillWidth horizontal="space-between" vertical="end" marginBottom="8">
+
+                      {/* Institution Name */}
+                      <Text id={institution.name} variant="heading-strong-l">
+                        {institution.name}
+                      </Text>
+
+                      {/* Institution Timeframe */}
+                      {about.studies?.timeframe && (
+                        <Text variant="heading-default-xs" onBackground="neutral-weak">
+                          {about.studies?.timeframe}
+                        </Text>
+                      )}
+                    </Flex>
+
+                    {/* Institution Description */}
                     <Text variant="heading-default-xs" onBackground="neutral-weak">
                       {institution.description}
                     </Text>
@@ -275,16 +334,25 @@ export default function About() {
             </>
           )}
 
+          {/* Technical skills */}
           {about.technical.display && (
             <>
               <Heading
                 as="h2"
                 id={about.technical.title}
                 variant="display-strong-s"
-                marginBottom="40"
+                marginBottom="m"
               >
                 {about.technical.title}
               </Heading>
+
+              {about.technical.description && (
+                <Column textVariant="body-default-l" fillWidth gap="xs" marginBottom="l">
+                  {about.technical.description}
+                </Column>
+              )}
+
+              {/* Technical Skills */}
               <Column fillWidth gap="l">
                 {about.technical.skills.map((skill, index) => (
                   <Column key={`${skill}-${index}`} fillWidth gap="4">
@@ -292,6 +360,8 @@ export default function About() {
                     <Text variant="body-default-m" onBackground="neutral-weak">
                       {skill.description}
                     </Text>
+
+                    {/* Images */}
                     {skill.images && skill.images.length > 0 && (
                       <Flex fillWidth paddingTop="m" gap="12" wrap>
                         {skill.images.map((image, index) => (

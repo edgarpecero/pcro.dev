@@ -9,6 +9,7 @@ import { routes, display } from "@/app/resources";
 import { person, about, blog, work, gallery } from "@/app/resources/content";
 import { useTheme } from "@/app/context/ThemeContext";
 import { Theme } from "@/app/resources/enums";
+import TimeDisplay from "./TimeDisplay";
 
 export const Header = () => {
   const pathname = usePathname() ?? "";
@@ -112,6 +113,13 @@ export const Header = () => {
                   />
                 </>
               )}
+              <Line vert maxHeight="24" />
+              <ToggleButton
+                onClick={toggleTheme}
+                size="m"
+                prefixIcon={theme === Theme.Dark ? Theme.Light : Theme.Dark}
+                selected={false}
+              />
             </Flex>
           </Flex>
         </Flex>
@@ -125,18 +133,7 @@ export const Header = () => {
 
           >
             <Flex hide="s">{display.time && (
-              <>
-                <ToggleButton
-                  onClick={toggleTheme}
-                  size="l"
-                  prefixIcon={theme === Theme.Dark ? Theme.Light : Theme.Dark}
-                  selected={false}
-                />
-                {/* <Button onClick={toggleTheme} >
-                  {theme === 'light' ? 'Dark' : 'Light'} Mode
-                </Button> */}
-              </>
-              // <TimeDisplay timeZone={person.location} />
+              <TimeDisplay timeZone={person.location} />
             )}
             </Flex>
           </Flex>

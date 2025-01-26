@@ -1,15 +1,16 @@
+import { CustomeTechnicalDescription } from "@/components/CustomeTechnicalDescription";
 import { InlineCode } from "@/once-ui/components";
 
 const person = {
-  firstName: "Selene",
-  lastName: "Yu",
+  firstName: "Edgar",
+  lastName: "Pecero",
   get name() {
     return `${this.firstName} ${this.lastName}`;
   },
-  role: "Design Engineer",
+  role: "Full Stack Developer",
   avatar: "/images/avatar.jpg",
-  location: "Asia/Jakarta", // Expecting the IANA time zone identifier, e.g., 'Europe/Vienna'
-  languages: ["English", "Bahasa"], // optional: Leave the array empty if you don't want to display languages
+  // location: "Puebla, Mexico", // Expecting the IANA time zone identifier, e.g., 'Europe/Vienna'
+  languages: ["English", "Spanish",],
 };
 
 const newsletter = {
@@ -61,6 +62,18 @@ const home = {
   ),
 };
 
+const technicalSkills = {
+  Technologies: ["JS", "TS", "React", "Next.js", "Node.js", "Springboot", "Java"],
+  Cloud: ["AWS", "K8", "CI/CD", "GenAI", "IoT"],
+};
+
+
+const yearsOfExperience = () => {
+  const start = 2021;
+  const current = new Date().getFullYear();
+  return current - start;
+}
+
 const about = {
   label: "About",
   title: "About me",
@@ -71,6 +84,11 @@ const about = {
   },
   avatar: {
     display: true,
+    sectionHeadline: "Skills",
+    skills: {
+      Technologies: ["JS", "TS", "React", "Next.js", "Node.js", "Springboot", "Java"],
+      Cloud: ["AWS", "K8", "CI/CD", "GenAI", "IoT"],
+    },
   },
   calendar: {
     display: true,
@@ -81,9 +99,7 @@ const about = {
     title: "Introduction",
     description: (
       <>
-        Selene is a Jakarta-based design engineer with a passion for transforming complex challenges
-        into simple, elegant design solutions. Her work spans digital interfaces, interactive
-        experiences, and the convergence of design and technology.
+        I’m a Full Stack Developer with {yearsOfExperience()}+ years of experience building scalable, high-performance web applications. Specializing in React, Next.js, Java, and Node.js, I’ve delivered impactful solutions for companies like The Home Depot, DP World Tour, and Options Clearing Corporation (OCC).
       </>
     ),
   },
@@ -92,41 +108,109 @@ const about = {
     title: "Work Experience",
     experiences: [
       {
-        company: "FLY",
-        timeframe: "2022 - Present",
-        role: "Senior Design Engineer",
+        company: "EVIDEN",
+        timeframe: "2023 - Present",
+
+        role: "Fullstack Developer | React & Java | The Home Depot (Dic 2024 - Present)",
         achievements: [
           <>
-            Redesigned the UI/UX for the FLY platform, resulting in a 20% increase in user
-            engagement and 30% faster load times.
+            Led frontend development using React and proposed a refactor within one week of joining, reducing codebase size by 45% and improving app performance by 30%, resulting in a faster and more fluid user experience.
           </>,
           <>
-            Spearheaded the integration of AI tools into design workflows, enabling designers to
-            iterate 50% faster.
+            Automated GCP deployments using GitHub Actions, minimizing downtime and streamlining updates.
           </>,
         ],
-        images: [
-          // optional: leave the array empty if you don't want to display images
-          {
-            src: "/images/projects/project-01/cover-01.jpg",
-            alt: "Once UI Project",
-            width: 16,
-            height: 9,
-          },
-        ],
+        images: [],
       },
       {
-        company: "Creativ3",
-        timeframe: "2018 - 2022",
-        role: "Lead Designer",
+        company: "",
+        timeframe: "",
+        role: "ServiceNow System Administrator | ServiceNow (Mar - Oct 2024)",
         achievements: [
           <>
-            Developed a design system that unified the brand across multiple platforms, improving
-            design consistency by 40%.
+            Managed Disney’s employee hardware upgrade platform, improving user satisfaction by 20% through an intuitive service catalog.
           </>,
           <>
-            Led a cross-functional team to launch a new product line, contributing to a 15% increase
-            in overall company revenue.
+            Automated workflows using JavaScript, boosting efficiency by 30% and reducing manual errors.
+          </>,
+        ],
+        images: [],
+      },
+      {
+        company: "",
+        timeframe: "",
+        role: "React Developer | Options Clearing Corporation (OCC) (Jul 2023 - March 2024)",
+        achievements: [
+          <>
+            Built a React component library using TypeScript and Tailwind CSS, enabling cross-team collaboration and accelerating UI development.
+          </>,
+          <>
+            Developed scalable interfaces for margin calculation tools, improving usability for end-users.
+          </>,
+          <>
+            Optimized Java Spring Boot endpoints, enabling faster UI integration and supporting backend development.
+          </>,
+        ],
+        images: [],
+      },
+      {
+        company: "ATOS",
+        timeframe: "2021 - 2023",
+        role: "Fullstack Developer | JavaScript & Node.js | DP World Tour (Jun 2022 - Jul 2023)",
+        achievements: [
+          <>
+            Developed the DP World Tour platform from scratch using Vanilla JavaScript, implementing core features like player registration, leaderboards, and a multi-channel notification system.
+          </>,
+          <>
+            Built a RESTful API using Node.js and MySQL, improving internal testing efficiency by 30% and ensuring scalable architecture.
+          </>,
+        ],
+        images: [],
+      },
+      {
+        company: "",
+        timeframe: "",
+        role: "Fullstack Developer | JavaScript, Angular & Node.js | Going4Zero by EcoAct (Dec 2021 - Jun 2022)",
+        achievements: [
+          <>
+            Developed and maintained an Angular-based web application, improving user experience with 5+ new features, reducing page load times by 25%, and resolving critical UI/UX issues to achieve a 98% bug-free experience.
+          </>,
+          <>
+            Optimized Node.js backend endpoints, reducing API response times by 30% and improving overall platform performance.
+          </>,
+        ],
+        images: [],
+      },
+      {
+        company: "",
+        timeframe: "",
+        role: "React Developer | Options Clearing Corporation (OCC) (Jul 2023 - March 2024)",
+        achievements: [
+          <>
+            Built a React component library using TypeScript and Tailwind CSS, enabling cross-team collaboration and accelerating UI development.
+          </>,
+          <>
+            Developed scalable interfaces for margin calculation tools, improving usability for end-users.
+          </>,
+          <>
+            Optimized Java Spring Boot endpoints, enabling faster UI integration and supporting backend development.
+          </>,
+        ],
+        images: [],
+      },
+      {
+        company: "LUMINA LEDS",
+        timeframe: "2020 - 2021",
+        role: "IoT & Web Developer, Founder",
+        achievements: [
+          <>
+            Developed an intuitive UI interface using React.js, featuring a color wheel for controlling RGB/Pixel LED lighting systems, allowing users to easily interact and customize LED colors.
+          </>,
+          <>
+            Engineered an IoT system with React.js and Arduino/Raspberry Pi/ESPx microcontrollers in C++ to enable remote control and customization of RGB/Pixel LED lighting via Wi-Fi, providing dynamic lighting solutions and smart automation
+          </>,
+          <>
+            Managed product sales and installations for custom LED systems, providing tailored solutions and exceptional customer service, resulting in a 95% client satisfaction rate and 20% repeat business.
           </>,
         ],
         images: [],
@@ -135,21 +219,19 @@ const about = {
   },
   studies: {
     display: true, // set to false to hide this section
-    title: "Studies",
+    title: "Education",
+    timeframe: "2013 - 2019",
     institutions: [
       {
-        name: "University of Jakarta",
-        description: <>Studied software engineering.</>,
-      },
-      {
-        name: "Build the Future",
-        description: <>Studied online marketing and personal branding.</>,
+        name: "Benemérita Universidad Autónoma de Puebla",
+        description: <>Bachelor of Science in Mechatronic Engineering </>,
       },
     ],
   },
   technical: {
     display: true, // set to false to hide this section
     title: "Technical skills",
+    description: <CustomeTechnicalDescription />,
     skills: [
       {
         title: "Figma",
@@ -282,4 +364,27 @@ const gallery = {
   ],
 };
 
-export { person, social, newsletter, home, about, blog, work, gallery };
+const structure = [
+  {
+    title: about.intro.title,
+    display: about.intro.display,
+    items: [],
+  },
+  {
+    title: about.work.title,
+    display: about.work.display,
+    items: about.work.experiences.map((experience) => experience.company),
+  },
+  {
+    title: about.studies.title,
+    display: about.studies.display,
+    items: about.studies.institutions.map((institution) => institution.name),
+  },
+  {
+    title: about.technical.title,
+    display: about.technical.display,
+    items: about.technical.skills.map((skill) => skill.title),
+  },
+];
+
+export { person, social, newsletter, home, about, blog, work, gallery, technicalSkills, structure };
