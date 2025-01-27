@@ -7,7 +7,6 @@ import { baseURL, routes } from "@/app/resources";
 import { home, about, person, newsletter } from "@/app/resources/content";
 import { Mailchimp } from "@/components";
 import { Posts } from "@/components/blog/Posts";
-import Particles from "@/components/Particles";
 
 export async function generateMetadata() {
   const title = home.title;
@@ -63,19 +62,26 @@ export default function Home() {
           }),
         }}
       />
+
       <Column fillWidth paddingY="l" gap="m">
         <Column maxWidth="s">
-          <RevealFx translateY="4" fillWidth horizontal="start" paddingBottom="m">
+          
+          {/* Headline */}
+          <RevealFx speed="fast" translateY="4" fillWidth horizontal="start" paddingBottom="m">
             <Heading wrap="balance" variant="display-strong-l">
               {home.headline}
             </Heading>
           </RevealFx>
-          <RevealFx translateY="8" delay={0.2} fillWidth horizontal="start" paddingBottom="m">
+          
+          {/* Subline */}
+          <RevealFx speed="fast" translateY="8" delay={0.2} fillWidth horizontal="start" paddingBottom="m">
             <Text wrap="balance" onBackground="neutral-weak" variant="heading-default-xl">
               {home.subline}
             </Text>
           </RevealFx>
-          <RevealFx translateY="12" delay={0.4} horizontal="start">
+
+          {/* About Avatar */}
+          <RevealFx speed="fast" translateY="12" delay={0.4} horizontal="start">
             <Button
               id="about"
               data-border="rounded"
@@ -98,10 +104,14 @@ export default function Home() {
           </RevealFx>
         </Column>
       </Column>
-      <RevealFx translateY="16" delay={0.6}>
+
+      {/* Projects 1*/}
+      {/* <RevealFx speed="fast" translateY="16" delay={0.6}>
         <Projects range={[1, 1]} />
-      </RevealFx>
-      {routes["/blog"] && (
+      </RevealFx> */}
+
+      {/* Blog */}
+      {/* {routes["/blog"] && (
         <Flex fillWidth gap="24" mobileDirection="column">
           <Flex flex={1} paddingLeft="l">
             <Heading as="h2" variant="display-strong-xs" wrap="balance">
@@ -112,8 +122,12 @@ export default function Home() {
             <Posts range={[1, 2]} columns="2" />
           </Flex>
         </Flex>
-      )}
+      )} */}
+
+      {/* Projects 2 */}
       <Projects range={[2]} />
+
+      {/* Newsletter */}
       {newsletter.display && <Mailchimp newsletter={newsletter} />}
     </Column>
   );

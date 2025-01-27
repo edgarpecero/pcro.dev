@@ -1,0 +1,59 @@
+---
+title: "Order Management and Notification System"
+publishedAt: "11-01-2024"
+summary: "A scalable microservices-based e-commerce solution for order processing and notifications."
+team:
+  - name: "Edgar Pecero"
+    role: "Full Stack Developer"
+link: "http://www.omnsystem.com.s3-website-us-east-1.amazonaws.com/"
+images:
+  - "/images/projects/OMNsystems_home_dashboard.png"
+---
+
+## Introduction
+The Order Management and Notification System is a robust e-commerce solution designed to handle order processing and notifications efficiently. The project leverages a microservices architecture to ensure scalability, resilience, and high performance.
+
+## Objective
+The primary goal of this project was to develop a system capable of:
+- Managing high volumes of orders.
+- Sending real-time notifications to customers and stakeholders.
+- Scaling horizontally to handle increased workloads.
+
+## Technologies Used
+- **Frontend:** React, TypeScript, Next.js
+- **Backend:** Java, Spring Boot
+- **Cloud Services:** AWS (Lambda, S3, DynamoDB, API Gateway, SQS)
+- **Orchestration:** Kubernetes (K8s)
+- **CI/CD:** Jenkins, GitHub Actions
+
+## Architecture
+The system is based on a microservices architecture, with each service dedicated to a specific function:
+- **Order Service:** Handles order creation, updates, and retrieval.
+- **Notification Service:** Manages email and SMS notifications.
+- **User Management Service:** Maintains customer profiles and preferences.
+
+All services communicate asynchronously through **AWS SQS** to ensure reliability and fault tolerance.
+
+## Key Features
+- **Order Processing:** Streamlined workflows to handle order lifecycles.
+- **Notifications:** Configurable email and SMS notifications for order status updates.
+- **Scalability:** Horizontal scaling to handle traffic surges.
+- **High Availability:** Deployment on Kubernetes clusters to ensure uptime.
+
+## Challenges and Solutions
+- **Challenge:** Handling real-time notifications for a large user base.
+  - **Solution:** Implemented asynchronous processing using AWS SQS and Lambda functions.
+- **Challenge:** Ensuring data consistency across distributed services.
+  - **Solution:** Used DynamoDB with eventual consistency and designed idempotent endpoints.
+
+## Results
+The system successfully:
+- Processed thousands of orders daily without downtime.
+- Delivered notifications with a latency of less than 2 seconds.
+- Scaled dynamically during high-demand events, maintaining optimal performance.
+
+## Conclusion
+This project demonstrated the effectiveness of microservices and cloud-native technologies in building scalable and resilient systems. It highlights my expertise in architecting and implementing enterprise-level solutions.
+
+## Link
+Explore more details about the project [here](https://example-order-management.com).

@@ -14,11 +14,11 @@ const person = {
 };
 
 const newsletter = {
-  display: true,
+  display: false,
   title: <>Subscribe to {person.firstName}'s Newsletter</>,
   description: (
     <>
-      I occasionally write about design, technology, and share thoughts on the intersection of
+      I occasionally write about code, technology, and share thoughts on the intersection of
       creativity and engineering.
     </>
   ),
@@ -53,11 +53,10 @@ const home = {
   label: "Home",
   title: `${person.name}'s Portfolio`,
   description: `Portfolio website showcasing my work as a ${person.role}`,
-  headline: <>Design engineer and builder</>,
+  headline: <>Full Stack Developer</>,
   subline: (
     <>
-      I'm Selene, a design engineer at <InlineCode>FLY</InlineCode>, where I craft intuitive
-      <br /> user experiences. After hours, I build my own projects.
+      I'm Edgar, a Software Developer at <InlineCode>EVIDEN</InlineCode> specializing in building robust and scalable web apps with expertise in React, Next.js, Java, and Node.js.
     </>
   ),
 };
@@ -66,7 +65,6 @@ const technicalSkills = {
   Technologies: ["JS", "TS", "React", "Next.js", "Node.js", "Springboot", "Java"],
   Cloud: ["AWS", "K8", "CI/CD", "GenAI", "IoT"],
 };
-
 
 const yearsOfExperience = () => {
   const start = 2021;
@@ -85,10 +83,7 @@ const about = {
   avatar: {
     display: true,
     sectionHeadline: "Skills",
-    skills: {
-      Technologies: ["JS", "TS", "React", "Next.js", "Node.js", "Springboot", "Java"],
-      Cloud: ["AWS", "K8", "CI/CD", "GenAI", "IoT"],
-    },
+    skills: technicalSkills
   },
   calendar: {
     display: true,
@@ -99,7 +94,7 @@ const about = {
     title: "Introduction",
     description: (
       <>
-        I’m a Full Stack Developer with {yearsOfExperience()}+ years of experience building scalable, high-performance web applications. Specializing in React, Next.js, Java, and Node.js, I’ve delivered impactful solutions for companies like The Home Depot, DP World Tour, and Options Clearing Corporation (OCC).
+        Edgar is a Full Stack Developer with {yearsOfExperience()}+ years of experience building scalable, high-performance web applications. His work spans React, Next.js, Java, and Node.js, delivering impactful solutions for companies like The Home Depot, DP World Tour, and Options Clearing Corporation (OCC).
       </>
     ),
   },
