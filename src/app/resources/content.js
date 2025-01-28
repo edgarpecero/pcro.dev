@@ -8,7 +8,7 @@ const person = {
     return `${this.firstName} ${this.lastName}`;
   },
   role: "Full Stack Developer",
-  avatar: "/images/avatarOriginalSize.png",
+  avatar: "/images/avatarOriginalSize.jpg",
   // location: "Puebla, Mexico", // Expecting the IANA time zone identifier, e.g., 'Europe/Vienna'
   languages: ["English", "Spanish",],
 };
@@ -87,7 +87,7 @@ const about = {
   },
   calendar: {
     display: true,
-    link: "https://cal.com",
+    link: "https://cal.com/edgar-pecero-xmt26h",
   },
   intro: {
     display: true,

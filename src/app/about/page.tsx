@@ -116,10 +116,11 @@ export default function About() {
               src={person.avatar}
               quality={100}
             />
-            <Flex gap="8" vertical="center">
+            
+            {/* <Flex gap="8" vertical="center">
               <Icon onBackground="accent-weak" name="globe" />
               {person.location}
-            </Flex>
+            </Flex> */}
 
             {/* Avatar Languages */}
             {person.languages.length > 0 && (

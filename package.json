@@ -1,6 +1,6 @@
 {
-  "name": "@once-ui-system/pcro.dev",
-  "version": "1.3.0",
+  "name": "pcro.dev",
+  "version": "1.0.0",
   "scripts": {
     "dev": "next dev -p 4000",
     "export": "next export",
