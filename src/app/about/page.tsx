@@ -15,6 +15,7 @@ import TableOfContents from "@/components/about/TableOfContents";
 import styles from "@/components/about/about.module.scss";
 import { person, about, social, structure } from "@/app/resources/content";
 import { ImageContent } from "../resources/types";
+import Image from "next/image";
 
 const styleConfig = {
   heading: {
@@ -106,7 +107,15 @@ export default function About() {
             flex={3}
             horizontal="center"
           >
-            <Avatar src={person.avatar} size="xl" />
+            {/* <Avatar src={person.avatar} size="xl" /> */}
+            <Image
+              style={{ borderRadius: "50%" }}
+              alt={person.name + " avatar"}
+              width="160"
+              height="160"
+              src={person.avatar}
+              quality={100}
+            />
             <Flex gap="8" vertical="center">
               <Icon onBackground="accent-weak" name="globe" />
               {person.location}

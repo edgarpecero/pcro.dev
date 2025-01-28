@@ -1,0 +1,256 @@
+---
+title: "Project Blog: Java Microservices with Spring Boot on Kubernetes"
+publishedAt: "2024-10-29"
+summary: "A scalable microservices-based e-commerce solution for order processing and notifications."
+team:
+  - name: "Edgar Pecero"
+    role: "Full Stack Developer"
+    avatar: "/images/avatar.png"
+tag: "Technology"
+---
+
+## Introduction
+
+In this guide, we will walk through the process of deploying Java microservices using Spring Boot on Kubernetes. We'll leverage AWS services, Docker, and Kubernetes to ensure scalability and resilience in a modern cloud-based architecture.
+
+---
+
+## Step 1: Create an AWS Account
+
+1. Visit [AWS](https://aws.amazon.com) and sign up for a new account.
+2. Provide billing details and complete the registration process.
+3. Familiarize yourself with the AWS free tier, which offers many services free for 12 months, such as EC2, S3, and RDS.
+
+---
+
+## Step 2: Install AWS CLI
+
+AWS CLI allows you to interact with AWS services via the terminal.
+
+### Install AWS CLI v2
+
+- **Linux/macOS:**
+  ```bash
+  curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+  unzip awscliv2.zip
+  sudo ./aws/install
+  ```
+- **macOS (Homebrew):**
+  ```bash
+  brew install awscli
+  ```
+- **Windows:** Use the installer or Windows Package Manager (`winget`).
+
+### Verify Installation
+
+Run:
+```bash
+aws --version
+```
+Expected output: `aws-cli/2.x.x`.
+
+### Configure AWS CLI
+
+1. Create an IAM user with programmatic access.
+2. Assign the `AdministratorAccess` policy.
+3. Configure AWS CLI:
+   ```bash
+   aws configure
+   ```
+   Provide:
+   - Access Key ID
+   - Secret Access Key
+   - Default region (e.g., `us-west-2`)
+   - Default output format (`json`).
+
+---
+
+## Step 3: Install Docker
+
+Docker is essential for containerizing microservices.
+
+### Install Docker
+
+- **Linux:**
+  ```bash
+  sudo apt update
+  sudo apt install docker.io
+  ```
+  Enable and start Docker:
+  ```bash
+  sudo systemctl start docker
+  sudo systemctl enable docker
+  ```
+
+- **macOS:**
+  ```bash
+  brew install --cask docker
+  ```
+
+### Verify Installation
+
+Run:
+```bash
+docker --version
+```
+Expected output: `Docker version xx.xx`.
+
+---
+
+## Step 4: Install Kubernetes Tools
+
+### Install kubectl
+
+`kubectl` is used to manage Kubernetes clusters.
+
+- **Linux/macOS:**
+  ```bash
+  curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+  sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+  ```
+
+- **macOS (Homebrew):**
+  ```bash
+  brew install kubectl
+  ```
+
+### Verify Installation
+
+Run:
+```bash
+kubectl version --client
+```
+
+### Install eksctl
+
+`eksctl` simplifies creating and managing Amazon EKS clusters.
+
+- **Linux/macOS:**
+  ```bash
+  curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+  sudo mv /tmp/eksctl /usr/local/bin
+  ```
+
+### Verify Installation
+
+Run:
+```bash
+eksctl version
+```
+
+---
+
+## Step 5: Create an EKS Cluster
+
+Run the following command to create a Kubernetes cluster:
+
+```bash
+eksctl create cluster \
+  --name java-cluster \
+  --region us-west-2 \
+  --nodegroup-name java-nodes \
+  --node-type t3.medium \
+  --nodes 3 \
+  --nodes-min 1 \
+  --nodes-max 4 \
+  --managed
+```
+
+After creation, connect `kubectl` to the cluster:
+
+```bash
+aws eks --region us-west-2 update-kubeconfig --name java-cluster
+```
+
+---
+
+## Step 6: Build and Push Docker Images
+
+### Build the Docker Image
+
+1. Create a `Dockerfile` for your Spring Boot service:
+   ```dockerfile
+   FROM openjdk:17-jdk-slim
+   COPY target/myapp.jar /app.jar
+   ENTRYPOINT ["java", "-jar", "/app.jar"]
+   ```
+
+2. Build the Docker image:
+   ```bash
+   docker build -t my-spring-boot-app .
+   ```
+
+### Push to AWS Elastic Container Registry (ECR)
+
+1. Authenticate to ECR:
+   ```bash
+   aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin <your-account-id>.dkr.ecr.us-west-2.amazonaws.com
+   ```
+
+2. Create an ECR repository:
+   ```bash
+   aws ecr create-repository --repository-name spring-boot-service --region us-west-2
+   ```
+
+3. Tag and push the image:
+   ```bash
+   docker tag my-spring-boot-app:latest <your-account-id>.dkr.ecr.us-west-2.amazonaws.com/spring-boot-service:latest
+   docker push <your-account-id>.dkr.ecr.us-west-2.amazonaws.com/spring-boot-service:latest
+   ```
+
+---
+
+## Step 7: Deploy on Kubernetes
+
+1. Create a Kubernetes deployment:
+   ```yaml
+   apiVersion: apps/v1
+   kind: Deployment
+   metadata:
+     name: spring-boot-app
+   spec:
+     replicas: 3
+     selector:
+       matchLabels:
+         app: spring-boot-app
+     template:
+       metadata:
+         labels:
+           app: spring-boot-app
+       spec:
+         containers:
+         - name: spring-boot-app
+           image: <your-account-id>.dkr.ecr.us-west-2.amazonaws.com/spring-boot-service:latest
+           ports:
+           - containerPort: 8080
+   ```
+
+2. Apply the deployment:
+   ```bash
+   kubectl apply -f deployment.yaml
+   ```
+
+3. Expose the service:
+   ```yaml
+   apiVersion: v1
+   kind: Service
+   metadata:
+     name: spring-boot-service
+   spec:
+     type: LoadBalancer
+     selector:
+       app: spring-boot-app
+     ports:
+     - protocol: TCP
+       port: 80
+       targetPort: 8080
+   ```
+   ```bash
+   kubectl apply -f service.yaml
+   ```
+
+---
+
+## Conclusion
+
+Congratulations! You have successfully deployed a Java microservice using Spring Boot on Kubernetes with AWS. This setup ensures scalability, resilience, and high performance for modern cloud applications.

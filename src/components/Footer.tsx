@@ -1,4 +1,4 @@
-import { Flex, IconButton, SmartLink, Text } from "@/once-ui/components";
+import { Flex, IconButton, Text } from "@/once-ui/components";
 import { person, social } from "@/app/resources/content";
 import styles from "./Footer.module.scss";
 
@@ -27,13 +27,7 @@ export const Footer = () => {
           <Text onBackground="neutral-weak">© {currentYear} /</Text>
           <Text paddingX="4">{person.name}</Text>
           <Text onBackground="neutral-weak">
-            / Build your portfolio with{" "}
-            <SmartLink
-              style={{ marginLeft: "-0.125rem" }}
-              href="https://once-ui.com/templates/magic-portfolio"
-            >
-              Once UI
-            </SmartLink>
+            / Built with Next.js to share knowledge and inspire others.
           </Text>
         </Text>
         <Flex gap="16">

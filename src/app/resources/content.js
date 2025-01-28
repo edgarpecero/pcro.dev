@@ -8,7 +8,7 @@ const person = {
     return `${this.firstName} ${this.lastName}`;
   },
   role: "Full Stack Developer",
-  avatar: "/images/avatar.jpg",
+  avatar: "/images/avatarOriginalSize.png",
   // location: "Puebla, Mexico", // Expecting the IANA time zone identifier, e.g., 'Europe/Vienna'
   languages: ["English", "Spanish",],
 };
@@ -30,12 +30,12 @@ const social = [
   {
     name: "GitHub",
     icon: "github",
-    link: "https://github.com/once-ui-system/nextjs-starter",
+    link: "https://github.com/edgarpecero",
   },
   {
     name: "LinkedIn",
     icon: "linkedin",
-    link: "https://www.linkedin.com/company/once-ui/",
+    link: "https://www.linkedin.com/in/edgarpecero",
   },
   {
     name: "X",
@@ -45,7 +45,7 @@ const social = [
   {
     name: "Email",
     icon: "email",
-    link: "mailto:example@gmail.com",
+    link: "mailto:edgarpecero7@gmail.com",
   },
 ];
 
@@ -56,7 +56,7 @@ const home = {
   headline: <>Full Stack Developer</>,
   subline: (
     <>
-      I'm Edgar, a Software Developer at <InlineCode>EVIDEN</InlineCode> specializing in building robust and scalable web apps with expertise in React, Next.js, Java, and Node.js.
+      I'm Edgar, a Software Developer at <InlineCode>EVIDEN</InlineCode> specializing in building robust and scalable web apps with expertise in React, Next.js, Java and Node.js.
     </>
   ),
 };
@@ -229,31 +229,12 @@ const about = {
     description: <CustomeTechnicalDescription />,
     skills: [
       {
-        title: "Figma",
-        description: <>Able to prototype in Figma with Once UI with unnatural speed.</>,
+        title: "Order Management and Notification System",
+        description: <>A scalable microservices-based e-commerce solution for order processing and notifications hosted on AWS.</>,
         // optional: leave the array empty if you don't want to display images
         images: [
           {
-            src: "/images/projects/project-01/cover-02.jpg",
-            alt: "Project image",
-            width: 16,
-            height: 9,
-          },
-          {
-            src: "/images/projects/project-01/cover-03.jpg",
-            alt: "Project image",
-            width: 16,
-            height: 9,
-          },
-        ],
-      },
-      {
-        title: "Next.js",
-        description: <>Building next gen apps with Next.js + Once UI + Supabase.</>,
-        // optional: leave the array empty if you don't want to display images
-        images: [
-          {
-            src: "/images/projects/project-01/cover-04.jpg",
+            src: "/images/projects/OMNsystems_home_dashboard.png",
             alt: "Project image",
             width: 16,
             height: 9,
@@ -266,7 +247,7 @@ const about = {
 
 const blog = {
   label: "Blog",
-  title: "Writing about design and tech...",
+  title: "Sharing Knowledge: Development and Technology",
   description: `Read what ${person.name} has been up to recently`,
   // Create new blog posts by adding a new .mdx file to app/blog/posts
   // All posts will be listed on the /blog route
@@ -275,7 +256,7 @@ const blog = {
 const work = {
   label: "Work",
   title: "My projects",
-  description: `Design and dev projects by ${person.name}`,
+  description: `Dev projects by ${person.name}`,
   // Create new project pages by adding a new .mdx file to app/blog/posts
   // All projects will be listed on the /home and /work routes
 };
