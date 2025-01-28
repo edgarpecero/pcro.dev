@@ -1,12 +1,10 @@
-import { Theme, Neutral, Brand, Colors, Solid, SolidStyle, Border, Surface, Transition } from "./enums";
-
 const baseURL = "demo.magic-portfolio.com";
 
 const routes = {
   "/": true,
   "/about": true,
   "/work": true,
-  "/blog": false,
+  "/blog": true,
   "/gallery": false,
 };
 
