@@ -5,11 +5,13 @@ export const CustomeTechnicalDescription = () => {
   return (
     <>
       {Object.entries(technicalSkills).map(([category, skillList]) => (
-        <Flex fillWidth gap="xs">
+        <Flex fillWidth gap="s" mobileDirection="column" marginBottom="m">
           <Text variant="body-default-m" onBackground="brand-weak" style={{ width: '110px' }}>
             {category}:
           </Text>
-          {skillList.map((skill) => <InlineCode>{skill}</InlineCode>)}
+          <Flex fillWidth gap="xs" wrap={true}>
+            {skillList.map((skill) => <InlineCode>{skill}</InlineCode>)}
+          </Flex>
         </Flex>
       ))}
     </>
