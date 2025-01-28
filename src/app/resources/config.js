@@ -6,7 +6,7 @@ const routes = {
   "/": true,
   "/about": true,
   "/work": true,
-  "/blog": true,
+  "/blog": false,
   "/gallery": false,
 };
 
@@ -17,15 +17,15 @@ const protectedRoutes = {
 };
 
 const style = {
-  theme: Theme.Dark, // Dark | Light
-  neutral: Neutral.Gray, // sand | gray | slate
-  brand: Brand.Moss, // Blue | Indigo | Violet | Magenta | pink | Red | Orange | Yellow | Moss | Green | Emerald | Aqua | Cyan
-  accent: Colors.Emerald, // Blue | Indigo | Violet | Magenta | pink | Red | Orange | Yellow | Moss | Green | Emerald | Aqua | Cyan
-  solid: Solid.Contrast, // color | contrast
-  solidStyle: SolidStyle.Flat, // flat | plastic
-  border: Border.Playful,// rounded | playful | conservative
-  surface: Surface.Translucent, // filled | translucent
-  transition: Transition.All, // all | micro | macro
+  theme: "dark", // dark | light
+  neutral: "gray", // sand | gray | slate
+  brand: "moss", // blue | indigo | violet | magenta | pink | red | orange | yellow | moss | green | emerald | aqua | cyan
+  accent: "orange", // blue | indigo | violet | magenta | pink | red | orange | yellow | moss | green | emerald | aqua | cyan
+  solid: "contrast", // color | contrast
+  solidStyle: "flat", // flat | plastic
+  border: "playful", // rounded | playful | conservative
+  surface: "translucent", // filled | translucent
+  transition: "all", // all | micro | macro
 };
 
 const effects = {

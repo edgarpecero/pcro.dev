@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Button,
   Column,
   Flex,
@@ -13,7 +12,7 @@ import {
 import { baseURL } from "@/app/resources";
 import TableOfContents from "@/components/about/TableOfContents";
 import styles from "@/components/about/about.module.scss";
-import { person, about, social, structure } from "@/app/resources/content";
+import { person, about, social, structure, home } from "@/app/resources/content";
 import { ImageContent } from "../resources/types";
 import Image from "next/image";
 
@@ -24,7 +23,7 @@ const styleConfig = {
 }
 
 export async function generateMetadata() {
-  const title = about.title;
+  const title = home.title;
   const description = about.description;
   const ogImage = `https://${baseURL}/og?title=${encodeURIComponent(title)}`;
 
