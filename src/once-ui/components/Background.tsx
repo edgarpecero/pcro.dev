@@ -191,6 +191,7 @@ const Background = forwardRef<HTMLDivElement, BackgroundProps>(
       >
         {gradient.display && (
           <Flex
+            id="background-gradient"
             position="absolute"
             className={styles.gradient}
             opacity={gradient.opacity}
@@ -245,6 +246,7 @@ const Background = forwardRef<HTMLDivElement, BackgroundProps>(
         )}
         {grid.display && (
           <Flex
+            id="background-grid"
             position="absolute"
             top="0"
             left="0"

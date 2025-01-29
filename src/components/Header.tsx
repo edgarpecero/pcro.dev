@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 
-import { Button, Column, Dialog, Fade, Flex, IconButton, Line, PasswordInput, ToggleButton } from "@/once-ui/components";
+import { Fade, Flex, IconButton, Line, ToggleButton } from "@/once-ui/components";
 import styles from "@/components/Header.module.scss";
 
 import { routes, display } from "@/app/resources";
@@ -10,13 +10,20 @@ import { person, about, blog, work, gallery } from "@/app/resources/content";
 import { useTheme } from "@/app/context/ThemeContext";
 import { Theme } from "@/app/resources/enums";
 import TimeDisplay from "./TimeDisplay";
+import { useState } from "react";
+import { DialogStylePanel } from "./DialogStylePanel";
 
 export const Header = () => {
   const pathname = usePathname() ?? "";
-  const { toggleTheme, theme } = useTheme();
+  const { toggleTheme, theme, brandColor, setBrandColor } = useTheme();
+  const [isDialogOpen, setDialogOpen] = useState(false);
+
+  const toggleDialog = () => setDialogOpen(prev => !prev);
+
 
   return (
-    <>
+    <> 
+      <DialogStylePanel isDialogOpen={isDialogOpen} toggleDialog={toggleDialog} />
       <Fade hide="s" fillWidth position="fixed" height="80" zIndex={9} />
       <Fade show="s" fillWidth position="fixed" bottom="0" to="top" height="80" zIndex={9} />
       <Flex
@@ -120,14 +127,14 @@ export const Header = () => {
                 prefixIcon={theme === Theme.Dark ? Theme.Light : Theme.Dark}
                 selected={false}
               />
-              {/* <IconButton
-                onClick={toggleColorSettingsDialog}
+              <IconButton
+                onClick={toggleDialog}
                 icon="colorLens"
                 size="m"
                 tooltip="Color Palette"
                 tooltipPosition="top"
                 variant="ghost"
-              /> */}
+              />
             </Flex>
           </Flex>
         </Flex>
