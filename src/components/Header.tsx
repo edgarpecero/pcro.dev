@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 
-import { Fade, Flex, Line, ToggleButton } from "@/once-ui/components";
+import { Button, Column, Dialog, Fade, Flex, IconButton, Line, PasswordInput, ToggleButton } from "@/once-ui/components";
 import styles from "@/components/Header.module.scss";
 
 import { routes, display } from "@/app/resources";
@@ -120,6 +120,14 @@ export const Header = () => {
                 prefixIcon={theme === Theme.Dark ? Theme.Light : Theme.Dark}
                 selected={false}
               />
+              {/* <IconButton
+                onClick={toggleColorSettingsDialog}
+                icon="colorLens"
+                size="m"
+                tooltip="Color Palette"
+                tooltipPosition="top"
+                variant="ghost"
+              /> */}
             </Flex>
           </Flex>
         </Flex>

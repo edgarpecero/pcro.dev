@@ -2,6 +2,7 @@ import {
   Button,
   Column,
   Flex,
+  GlitchFx,
   Heading,
   Icon,
   IconButton,
@@ -16,19 +17,12 @@ import { person, about, social, structure, home } from "@/app/resources/content"
 import { ImageContent } from "../resources/types";
 import Image from "next/image";
 
-const styleConfig = {
-  heading: {
-    marginBottom: "s",
-  }
-}
-
 export async function generateMetadata() {
   const title = home.title;
   const description = about.description;
   const ogImage = `https://${baseURL}/og?title=${encodeURIComponent(title)}`;
 
   return {
-    title,
     description,
     openGraph: {
       title,
@@ -107,15 +101,17 @@ export default function About() {
             horizontal="center"
           >
             {/* <Avatar src={person.avatar} size="xl" /> */}
-            <Image
-              style={{ borderRadius: "50%" }}
-              alt={person.name + " avatar"}
-              width="160"
-              height="160"
-              src={person.avatar}
-              quality={100}
-            />
-            
+            <GlitchFx speed="slow">
+              <Image
+                style={{ borderRadius: "50%" }}
+                alt={person.name + " avatar"}
+                width="250"
+                height="250"
+                src={person.avatar}
+                quality={100}
+              />
+            </GlitchFx>
+
             {/* <Flex gap="8" vertical="center">
               <Icon onBackground="accent-weak" name="globe" />
               {person.location}
