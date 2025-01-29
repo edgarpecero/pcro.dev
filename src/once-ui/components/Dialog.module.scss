@@ -20,7 +20,7 @@
         visibility: visible;
     }
 
-    @media (--m) {
+    @media (--s) {
         position: fixed;
         bottom: var(--static-space-8);
         left: var(--static-space-8);

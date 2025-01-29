@@ -5,6 +5,7 @@ import { Brand, Theme } from "../resources/enums";
 
 interface ThemeContextType {
   theme: string;
+  brandColor: Brand;
   toggleTheme: () => void;
   setBrandColor: Dispatch<SetStateAction<Brand>>;
 }
@@ -21,13 +22,22 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   useEffect(() => {
     const root = document.documentElement;
+    if (theme === Theme.Dark) {
+      root.querySelector("#background-grid")?.classList.add("remove-background-grid");
+    }
+    if (theme === Theme.Light) {
+      root.querySelector("#background-grid")?.classList.remove("remove-background-grid");
+    }
+
     root.setAttribute("data-theme", theme);
     root.setAttribute("data-brand", brandColor);
+
   }, [theme, brandColor]);
 
   return (
     <ThemeContext.Provider value={{
       theme,
+      brandColor,
       toggleTheme,
       setBrandColor,
     }}>

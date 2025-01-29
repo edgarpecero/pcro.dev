@@ -36,7 +36,7 @@ const effects = {
   gradient: {
     display: true,
     x: 50,
-    y: 0,
+    y: 50,
     width: 100,
     height: 100,
     tilt: 0,
@@ -45,9 +45,9 @@ const effects = {
     opacity: 50,
   },
   dots: {
-    display: true,
     size: 2,
-    color: "brand-on-background-weak",
+    display: true,
+    color: "brand-background-strong",
     opacity: 20,
   },
   lines: {
@@ -56,8 +56,8 @@ const effects = {
     opacity: 100,
   },
   grid: {
-    display: false,
-    color: "neutral-alpha-weak",
+    display: true,
+    color: "brand-background-strong",
     opacity: 100,
   },
 };
