@@ -1,7 +1,8 @@
+
 # My Tech Journey Blog
 
 Welcome to my personal tech blog! 🚀 This project showcases my career, projects, and insights into the world of technology. Built with [Next.js](https://nextjs.org/), it serves as both a portfolio and a blog where I share everything related to my journey as a developer.
-
+Website: [pcro.dev](https://www.pcro.dev/)
 ---
 
 ## ✨ Features
