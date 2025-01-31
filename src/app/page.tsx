@@ -65,14 +65,14 @@ export default function Home() {
 
       <Column fillWidth paddingY="l" gap="m">
         <Column maxWidth="s">
-          
+
           {/* Headline */}
           <RevealFx speed="fast" translateY="4" fillWidth horizontal="start" paddingBottom="m">
             <Heading wrap="balance" variant="display-strong-l">
               {home.headline}
             </Heading>
           </RevealFx>
-          
+
           {/* Subline */}
           <RevealFx speed="fast" translateY="8" delay={0.2} fillWidth horizontal="start" paddingBottom="m">
             <Text wrap="balance" onBackground="neutral-weak" variant="heading-default-xl">
@@ -105,24 +105,27 @@ export default function Home() {
         </Column>
       </Column>
 
-      {/* Projects 1*/}
+      {/* Blog */}
       <RevealFx speed="fast" translateY="16" delay={0.6}>
-        <Projects range={[2]} />
+        {routes["/blog"] && (
+          <Flex fillWidth gap="24" mobileDirection="column">
+            <Flex flex={1} paddingLeft="l">
+              <Heading as="h2" variant="display-strong-xs" wrap="balance">
+                Latest from the blog
+              </Heading>
+            </Flex>
+            <Flex flex={3} paddingX="20">
+              <Posts range={[1, 2]} columns="2" />
+            </Flex>
+          </Flex>
+        )}
       </RevealFx>
 
-      {/* Blog */}
-      {routes["/blog"] && (
-        <Flex fillWidth gap="24" mobileDirection="column">
-          <Flex flex={1} paddingLeft="l">
-            <Heading as="h2" variant="display-strong-xs" wrap="balance">
-              Latest from the blog
-            </Heading>
-          </Flex>
-          <Flex flex={3} paddingX="20">
-            <Posts range={[1, 2]} columns="2" />
-          </Flex>
-        </Flex>
-      )}
+      {/* Projects 1*/}
+      <RevealFx speed="fast" translateY="16" delay={0.6}>
+        <Projects range={[1]} />
+      </RevealFx>
+
 
       {/* Projects 2 */}
       {/* <Projects range={[2]} /> */}
