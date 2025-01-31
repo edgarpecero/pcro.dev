@@ -1,0 +1,149 @@
+---
+title: "Setting Up Java and Maven for Your Development Environment"
+publishedAt: "2024-10-29"
+summary: "A guide to setting up Java, Maven, and IntelliJ IDEA for an optimized development workflow."
+team:
+  - name: "Edgar Pecero"
+    role: "Full Stack Developer"
+    avatar: "/images/avatar.jpg"
+tag: "Technology"
+---
+
+## Introduction
+
+This guide will walk you through installing Java, setting up Maven, and configuring IntelliJ IDEA to streamline your Java development workflow. These steps ensure that you have a robust environment for managing dependencies and building Java projects effectively.
+
+---
+
+## Installing Java
+
+### Download Java
+- Visit the OpenJDK website or a preferred provider (e.g., Oracle, AdoptOpenJDK).
+- Download the latest Java 8 MSI installer. This guide uses Java 8 update 8u432-b06.
+
+### Install Java
+- Run the downloaded `.msi` installer.
+- Follow the installation wizard’s prompts, using default settings.
+- Java is typically installed in `C:\Program Files\Java\jdk<version>` or `C:\Program Files\OpenLogic\jdk-8.0.432.06-hotspot`.
+
+### Set `JAVA_HOME` Environment Variable
+1. Open **Control Panel > System and Security > System > Advanced System Settings**.
+2. Under **System Properties**, go to the **Advanced** tab and click **Environment Variables**.
+3. Add a new **System variable**:
+   - **Variable Name:** `JAVA_HOME`
+   - **Variable Value:** `C:\Program Files\OpenLogic\jdk-8.0.432.06-hotspot` (without `\bin`).
+4. Update the `Path` variable by adding `%JAVA_HOME%\bin`.
+
+### Verify Java Installation
+Open a new terminal and run:
+
+```bash
+java -version
+```
+
+You should see version details confirming Java is correctly installed.
+
+---
+
+## Installing Maven
+
+### Download Maven
+- Visit the [Apache Maven](https://maven.apache.org/download.cgi) website and download the latest binary `.zip` file.
+
+### Install Maven
+- Extract the `.zip` file to a folder (e.g., `C:\Program Files\Maven`).
+- No admin privileges are needed if extracting within your user directory.
+
+### Set `MAVEN_HOME` and Update `PATH`
+1. Open **Environment Variables** in System Properties.
+2. Add a new **System variable**:
+   - **Variable Name:** `MAVEN_HOME`
+   - **Variable Value:** `C:\Program Files\Maven`
+3. Update the `Path` variable by adding `%MAVEN_HOME%\bin`.
+
+### Verify Maven Installation
+Open a new terminal and run:
+
+```bash
+mvn -version
+```
+
+You should see version details confirming Maven is correctly installed.
+
+---
+
+## Creating and Configuring a Java Project with Maven in IntelliJ IDEA
+
+### Open IntelliJ IDEA
+Use the terminal command (if configured in `PATH`):
+
+```bash
+idea .
+```
+
+Or manually open **IntelliJ IDEA** and select **New Project**.
+
+### Create a New Maven Project
+1. In the **New Project** wizard, select **Maven** as the project type.
+2. Configure:
+   - **Group ID:** `org.example`
+   - **Artifact ID:** `java-utils`
+   - **JDK Version:** Ensure it points to the installed Java 8 JDK.
+
+### Add Dependencies (e.g., Lombok) in `pom.xml`
+Open `pom.xml` in the project root and add:
+
+```xml
+<dependencies>
+  <dependency>
+    <groupId>org.projectlombok</groupId>
+    <artifactId>lombok</artifactId>
+    <version>1.18.24</version>
+    <scope>provided</scope>
+  </dependency>
+</dependencies>
+```
+
+### Validate the Project Setup
+- Go to **View > Tool Windows > Maven** in IntelliJ IDEA.
+- Build the project by selecting **Maven Lifecycle > compile**.
+
+---
+
+## Using Git from Terminal for Version Control
+
+### Initialize a Git Repository
+Run the following in your project folder:
+
+```bash
+git init
+```
+
+### Add a `.gitignore` File
+Include entries like:
+
+```
+.idea/
+target/
+```
+
+### Create a New Repository on GitHub and Push Your Code
+
+```bash
+git remote add origin https://github.com/yourusername/java-utils.git
+git branch -M main
+git push -u origin main
+```
+
+### Basic Git Workflow
+Stage and commit changes:
+
+```bash
+git add .
+git commit -m "Initial commit"
+```
+
+Push updates to GitHub:
+
+```bash
+git push origin main

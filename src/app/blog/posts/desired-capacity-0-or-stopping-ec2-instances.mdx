@@ -1,0 +1,61 @@
+---
+mdxname: desired-capacity-0-or-stopping-ec2-instances.mdx
+title: "Desired Capacity = 0 or Stopping EC2 Instances"
+publishedAt: "2024-11-06"
+summary: "Guidance on setting desired capacity to 0 or stopping EC2 instances in AWS EKS to shut down worker nodes temporarily."
+team:
+  - name: "Edgar Pecero"
+    role: "Full Stack Developer"
+    avatar: "/images/avatar.jpg"
+tag: "Technology"
+parent: cost-optimization-for-a-small-spring-boot-application-on-aws-eks.mdx
+---
+
+## Introduction
+
+To shut down the worker nodes in your AWS EKS cluster without terminating them (so you can start them back up later), you should set the desired capacity to 0 in the Node Group, rather than stopping the EC2 instances directly.
+
+### Here's why:
+
+### Desired Capacity = 0:
+
+This will scale down the EC2 instances in your Node Group to zero without terminating them. The instances will be stopped and you won't incur charges for them, but you can scale them back up later.
+
+Scaling to zero is the preferred approach to temporarily stop the worker nodes, as it allows you to easily restart them later by scaling the capacity back up.
+
+### Stopping EC2 Instances:
+
+If you manually stop the EC2 instances, they will not be running and won't incur charges for compute resources, but the EKS Node Group configuration won’t be updated to reflect the stopped instances.
+
+Stopping EC2 instances could lead to complexity if you want to reattach those instances to the EKS Node Group, so it's usually better to scale down the Node Group instead.
+
+### Steps to Scale the Node Group to Zero:
+
+1. **Go to the EKS Console:**
+
+- Open the EKS Console.
+- Select the EKS Cluster where you want to stop the worker nodes.
+
+2. **Navigate to Node Groups:**
+
+- In the left panel, click "Node Groups" under the Compute section.
+
+3. **Edit the Node Group:**
+
+- Select the Node Group you want to scale down.
+- Click "Edit" in the top-right corner.
+
+4. **Set Desired Capacity to 0:**
+
+- Under Scaling Configuration, set Desired capacity to 0.
+- This will stop the EC2 instances running in that Node Group.
+
+5. **Apply the Changes:**
+
+- Click "Update" to apply the change.
+
+### Result:
+
+The worker EC2 instances will stop running (i.e., no compute charges will accrue), but the Node Group will still exist, and you can easily scale it back up when needed by changing the desired capacity to a higher number.
+
+This is the recommended method for temporarily shutting down your EKS cluster's worker nodes while keeping your environment intact.
