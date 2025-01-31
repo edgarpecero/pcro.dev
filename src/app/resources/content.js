@@ -114,6 +114,9 @@ const about = {
           <>
             Automated GCP deployments using GitHub Actions, minimizing downtime and streamlining updates.
           </>,
+          <>
+            Developed a RESTful API using Spring Boot and SQL to query and retrieve application performance metrics from BigQuery, deployed as a Cloud Run function for scalability.
+          </>
         ],
         images: [],
       },

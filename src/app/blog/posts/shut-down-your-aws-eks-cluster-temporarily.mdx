@@ -1,0 +1,82 @@
+---
+mdxname: shut-down-your-aws-eks-cluster-temporarily.mdx
+title: "Shut Down your AWS EKS Cluster Temporarily"
+publishedAt: "2024-11-06"
+summary: "A step-by-step guide to temporarily shutting down your AWS EKS cluster by scaling down node groups, stopping workloads, and minimizing costs."
+team:
+  - name: "Edgar Pecero"
+    role: "Full Stack Developer"
+    avatar: "/images/avatar.jpg"
+tag: "Cloud Computing"
+parent: cost-optimization-for-a-small-spring-boot-application-on-aws-eks.mdx
+---
+
+## Introduction
+
+This guide provides detailed steps to temporarily shut down your AWS EKS cluster by scaling down node groups, stopping workloads, and minimizing costs. While the EKS control plane will still incur charges, these steps will help you reduce costs associated with EC2 instances and other resources.
+
+---
+
+## 1. Scale Down Node Group to Zero Instances (Shut Down the EC2 Instances)
+
+Scaling the worker nodes down to zero effectively stops any active resources running within the EKS cluster, reducing costs. The EKS control plane itself (the managed part of EKS) will still incur charges, but no EC2 resources will be running.
+
+### Steps:
+
+1. **Navigate to the EKS Console:**
+   - Open the Amazon EKS Console.
+   - Select the EKS Cluster.
+
+2. **Scale the Node Group:**
+   - In the Compute section, click "Node Groups".
+   - Select the Node Group you want to scale down.
+   - Click "Edit".
+   - Under the Scaling configuration, set the Desired capacity to 0 (this will stop the EC2 instances in the node group).
+   - Click "Update".
+
+3. **Verify the Nodes:**
+   - Once the scaling change is applied, use `kubectl` to check the nodes in your cluster. They should show as "not ready" or absent:
+     ```bash
+     kubectl get nodes
+     ```
+   - You should see no active nodes running.
+
+---
+
+## 2. Disable the Cluster's Control Plane (Optional)
+
+You can't truly "shut down" the control plane, but you can make sure no services are running on the control plane by scaling down your workloads. This won't stop billing for the EKS control plane, but it will stop the services from running.
+
+### Steps:
+
+1. **Ensure no workloads (pods or services) are running in the cluster:**
+  ```bash
+   kubectl scale --replicas=0 deployment --all
+   kubectl scale --replicas=0 statefulset --all
+  ```
+  - This will stop all deployments and statefulsets from running.
+
+## 3. Stop Related Resources (Optional)
+
+### Stop Load Balancers:
+
+If you have any load balancers associated with the cluster, you may want to delete or temporarily disable them to avoid further charges.
+
+- Navigate to EC2 > Load Balancers and delete any related load balancers.
+
+### EBS Volumes:
+
+If you want to minimize costs even further, you can consider detaching or deleting any EBS volumes that were used by the worker nodes or applications.
+
+---
+
+## 4. Monitor Billing
+
+While the control plane will continue to incur a cost (since it's a managed service), scaling down your EC2 instances will prevent additional charges for the worker nodes.
+
+### Key Points:
+
+- Scaling down the node group to 0 stops your EC2 instances but leaves the EKS control plane running.
+- Deleting the worker nodes can reduce costs for EC2 instances, but you’ll still be billed for the EKS control plane.
+- To stop workloads and avoid charges for traffic, ensure no applications are running.
+- If you want to completely shut down the environment, deleting the node groups and all associated resources (EBS, Load Balancers, etc.) is the way to go.

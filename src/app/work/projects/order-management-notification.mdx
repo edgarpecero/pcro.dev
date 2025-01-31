@@ -4,7 +4,9 @@ publishedAt: "11-01-2024"
 summary: "A scalable microservices-based e-commerce solution for order processing and notifications."
 team:
   - name: "Edgar Pecero"
-    role: "Full Stack Developer"
+    role: "Full Stack Developer"  
+    avatar: "/images/avatar.jpg"
+
 link: "http://www.omnsystem.com.s3-website-us-east-1.amazonaws.com/"
 images:
   - "/images/projects/OMNsystems_home_dashboard.png"
@@ -20,17 +22,16 @@ The primary goal of this project was to develop a system capable of:
 - Scaling horizontally to handle increased workloads.
 
 ## Technologies Used
-- **Frontend:** React, TypeScript, Next.js
-- **Backend:** Java, Spring Boot
-- **Cloud Services:** AWS (Lambda, S3, DynamoDB, API Gateway, SQS)
+- **Frontend:**  React 18.3.1, Typescript 4.9.5 
+- **Backend:** Java 21, Spring Boot 3.3.5
+- **Cloud Services:** AWS (EKS, ECR, S3, DynamoDB, RDS (SQL Server), SNS, SES, IAM, CloudFormation)
 - **Orchestration:** Kubernetes (K8s)
-- **CI/CD:** Jenkins, GitHub Actions
+- **CI/CD:** GitHub Actions
 
 ## Architecture
 The system is based on a microservices architecture, with each service dedicated to a specific function:
 - **Order Service:** Handles order creation, updates, and retrieval.
 - **Notification Service:** Manages email and SMS notifications.
-- **User Management Service:** Maintains customer profiles and preferences.
 
 All services communicate asynchronously through **AWS SQS** to ensure reliability and fault tolerance.
 
@@ -42,7 +43,7 @@ All services communicate asynchronously through **AWS SQS** to ensure reliabilit
 
 ## Challenges and Solutions
 - **Challenge:** Handling real-time notifications for a large user base.
-  - **Solution:** Implemented asynchronous processing using AWS SQS and Lambda functions.
+  - **Solution:** Implemented asynchronous processing using AWS SQS and Lambda functions to trigger events when a DynamoDB records has been created, updated or deleted.
 - **Challenge:** Ensuring data consistency across distributed services.
   - **Solution:** Used DynamoDB with eventual consistency and designed idempotent endpoints.
 
@@ -55,5 +56,15 @@ The system successfully:
 ## Conclusion
 This project demonstrated the effectiveness of microservices and cloud-native technologies in building scalable and resilient systems. It highlights my expertise in architecting and implementing enterprise-level solutions.
 
+Please visit [blog](/blog) to see related post about this project.
+
 ## Link
-Explore more details about the project [here](https://example-order-management.com).
+Explore more details about the project [here](http://www.omnsystem.com.s3-website-us-east-1.amazonaws.com/).
+
+
+[Order Service Repository](https://github.com/edgarpecero/OMN-Order-Service/) 
+
+[Notification Service Repository](https://github.com/edgarpecero/OMN-Notification-Service)
+
+[React App Repository](https://github.com/edgarpecero/OMN-Order-Service-React-App) 
+

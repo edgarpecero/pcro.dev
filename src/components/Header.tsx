@@ -15,7 +15,7 @@ import { DialogStylePanel } from "./DialogStylePanel";
 
 export const Header = () => {
   const pathname = usePathname() ?? "";
-  const { toggleTheme, theme, brandColor, setBrandColor } = useTheme();
+  const { toggleTheme, theme } = useTheme();
   const [isDialogOpen, setDialogOpen] = useState(false);
 
   const toggleDialog = () => setDialogOpen(prev => !prev);

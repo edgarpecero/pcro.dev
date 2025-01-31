@@ -1,0 +1,151 @@
+---
+mdxname: cost-optimization-for-a-small-spring-boot-application-on-aws-eks.mdx
+title: "Cost Optimization for a Small Spring Boot Application on AWS EKS"
+publishedAt: "2024-11-01"
+summary: "A guide to minimizing costs while maintaining functionality for a small Spring Boot application hosted on AWS EKS."
+team:
+  - name: "Edgar Pecero"
+    role: "Full Stack Developer"
+    avatar: "/images/avatar.jpg"
+tag: "Technology"
+children: [
+  shut-down-your-aws-eks-cluster-temporarily.mdx, 
+  desired-capacity-0-or-stopping-ec2-instances.mdx,
+  ]
+---
+
+## Introduction
+
+For a personal project with a small Spring Boot application hosted on AWS EKS, the goal is to minimize costs as much as possible while maintaining functionality. Here are actions you can take to achieve that:
+
+---
+
+## 1. Switch to AWS Fargate for EKS (If you want to avoid EC2 instances)
+
+**What it does:**
+With AWS Fargate, you don’t need to manage EC2 instances at all. Instead, AWS will automatically provision the compute resources needed to run your containers.
+
+**Why it’s cost-effective:**
+You pay for the compute resources your containers actually use, and you don't have to pay for idle EC2 instances when your application is not busy. Fargate is especially beneficial for small projects or development environments.
+
+**Action:**
+Modify your EKS setup to use Fargate profiles. This allows your Spring Boot application to run directly on Fargate without the need for EC2 instances.
+
+---
+
+## 2. Terminate Unused EC2 Instances
+
+**What it does:**
+You currently have two `t3.medium` EC2 instances running in different Availability Zones.
+
+**Why it’s cost-effective:**
+Even if these instances are small, they still incur costs. If your project doesn’t require two EC2 instances for redundancy or load balancing, terminate one or both to avoid unnecessary charges.
+
+**Action:**
+Stop or terminate the EC2 instance that is not needed. If you only need one instance for testing, reduce the count to 1.
+
+---
+
+## 3. Downsize EC2 Instances
+
+**What it does:**
+If you still need EC2 instances for your project but want to reduce costs, consider downsizing to smaller instance types.
+
+**Why it’s cost-effective:**
+`t3.medium` instances cost more compared to smaller ones. You can switch to `t3.micro` or `t3.small` instances for lower hourly rates.
+
+**Action:**
+If you continue to use EC2, resize the instances to a smaller type (e.g., `t3.micro` or `t3.small`).
+
+---
+
+## 4. Optimize Auto-Scaling Settings (if applicable)
+
+**What it does:**
+If your application is using auto-scaling for EC2 instances, it automatically adds more resources during peak times, but you may be paying for resources you don’t need during low traffic periods.
+
+**Why it’s cost-effective:**
+You can control the minimum and maximum number of EC2 instances to ensure you're not over-provisioned during low-traffic periods.
+
+**Action:**
+Adjust the auto-scaling settings for your EC2 instances or EKS node groups to use a minimum of 1 instance and scale up only when needed.
+
+---
+
+## 5. Use Spot Instances for EC2 Nodes
+
+**What it does:**
+Spot Instances are unused EC2 capacity that is available at a significant discount.
+
+**Why it’s cost-effective:**
+Spot Instances can reduce costs by up to 90%, but they come with the trade-off of being interrupted if AWS needs the capacity back.
+
+**Action:**
+If you continue using EC2 instances, switch to Spot Instances for EKS worker nodes (if your application can tolerate interruptions).
+
+---
+
+## 6. Enable Auto-Stop for EC2 Instances
+
+**What it does:**
+EC2 instances running idle can generate costs, even if they’re not being used.
+
+**Why it’s cost-effective:**
+Automatically stopping instances when they are not in use saves money.
+
+**Action:**
+Use AWS Instance Scheduler or set up an auto-stop script to automatically stop EC2 instances when you're not using them (e.g., during nights or weekends).
+
+---
+
+## 7. Use S3 for Storage Instead of EBS (if applicable)
+
+**What it does:**
+Your current EBS usage costs could be reduced by using Amazon S3 for storage if you are storing files or logs.
+
+**Why it’s cost-effective:**
+S3 can be cheaper than EBS for storing static data, and you only pay for the storage you actually use.
+
+**Action:**
+If your project uses EBS for storage, consider moving to S3 for any file storage or logs that don't require block storage.
+
+---
+
+## 8. Review and Delete Unused Resources
+
+**What it does:**
+If you have any other unused resources (e.g., unused Elastic IPs, Load Balancers, or snapshots), they can still incur charges.
+
+**Why it’s cost-effective:**
+Keeping unused resources running unnecessarily adds to the bill.
+
+**Action:**
+Delete unused Elastic IPs, EBS snapshots, and other resources that are no longer needed.
+
+---
+
+## 9. Monitor Billing Regularly
+
+**What it does:**
+Monitoring your AWS bills regularly can help identify unexpected usage.
+
+**Why it’s cost-effective:**
+Early detection of unnecessary or unexpected resource usage can help mitigate large charges before they accumulate.
+
+**Action:**
+Set up AWS Budgets and alerts to monitor costs, and track usage through the Cost Explorer dashboard.
+
+---
+
+## Recap of Immediate Actions to Reduce Costs:
+
+- Switch to Fargate if you don’t need EC2 instances for your Spring Boot project.
+- Terminate unnecessary EC2 instances (either both or downsize to one).
+- Resize EC2 instances to smaller types like `t3.micro`.
+- Enable Auto-Stop to stop instances when not in use.
+- Switch to Spot Instances if you are using EC2.
+- Move static storage to S3 instead of EBS if applicable.
+- Delete unused resources (e.g., Elastic IPs, Load Balancers).
+- Set up cost monitoring via AWS Budgets and Cost Explorer.
+
+By following these steps, you can significantly reduce your AWS costs while keeping your small Spring Boot project running efficiently.
