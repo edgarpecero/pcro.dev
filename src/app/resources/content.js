@@ -56,7 +56,7 @@ const home = {
   headline: <>Full Stack Developer</>,
   subline: (
     <>
-      I'm Edgar, a Software Developer at <InlineCode>EVIDEN</InlineCode> specializing in building robust and scalable web apps with expertise in React, Next.js, Java and Node.js.
+      I'm Edgar, a <InlineCode>Software Developer</InlineCode> • Expert in React & TypeScript • Next.js, Java, Node.js & AWS Certified
     </>
   ),
 };
@@ -94,7 +94,8 @@ const about = {
     title: "Introduction",
     description: (
       <>
-        Edgar is a Full Stack Developer with {yearsOfExperience()}+ years of experience building scalable, high-performance web applications. His work spans React, Next.js, Java, and Node.js, delivering impactful solutions for companies like The Home Depot, DP World Tour, and Options Clearing Corporation (OCC).
+        Edgar is a Full Stack Developer with {yearsOfExperience()}+ years of experience building scalable, high-performance web applications.
+        Adaptability is his strongest asset – he thrives in dynamic environments, learning quickly and shifting effortlessly across technologies, roles, and challenges.
       </>
     ),
   },
