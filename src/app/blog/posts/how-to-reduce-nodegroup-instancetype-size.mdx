@@ -1,0 +1,78 @@
+---
+mdxname: how-to-reduce-nodegroup-instancetype-size.mdx
+title: "How to reduce NodeGroup instanceType Size"
+publishedAt: "2024-10-30"
+summary: "How to reduce NodeGroup instanceType Size"
+team:
+  - name: "Edgar Pecero"
+    role: "Full Stack Developer"
+    avatar: "/images/avatar.jpg"
+tag: "Cloud"
+children: []
+---
+
+## Introduction
+
+I wanted to reduce the size of my nodes, so I created a new node group with an instance type of t3.nano, instead of t3.medium. Also, instead of having a capacity of 2, I reduced the desired capacity to 1. After the new group was created, I deleted the first group. What happens in my cluster while I am making these changes? What happens to the pods during these changes in the console? What will happen to the application that is running while these changes are being made?
+
+---
+
+### Changes to Node Group in EKS and Impact on Pods and Application
+
+When you make changes like creating a new node group with a different instance type and adjusting the desired capacity in AWS EKS, there are several important things happening in your cluster during the transition. The behavior of your pods and application will be influenced by these changes. Here's a breakdown:
+
+---
+
+#### 1. Creating a New Node Group with a Different Instance Type (t3.nano)
+- **New Nodes Join the Cluster**: When you create the new node group with the instance type `t3.nano` and a desired capacity of 1, AWS will provision the new EC2 instance(s) and register them as nodes in your EKS cluster. The node group will start provisioning the new EC2 instance(s), which will join your Kubernetes cluster as available nodes.
+- **Pod Scheduling**: As soon as the new EC2 instance(s) are up and running, Kubernetes will be able to schedule new pods on those nodes. However, your existing pods might not be immediately scheduled onto the new nodes if they are still running on the old nodes.
+- **Pod Disruption**: New pods might be scheduled onto the new nodes based on resource availability (if the `t3.nano` instance has sufficient resources), but existing pods on the old node group (the `t3.medium` nodes) will not automatically migrate to the new node group. They will continue running on the old instances until the old nodes are deleted.
+
+---
+
+#### 2. Reducing Desired Capacity and Deleting the First Node Group (t3.medium)
+- **Scaling Down the First Node Group**: When you scale down the old node group (`t3.medium`) by reducing the desired capacity to 0, the EC2 instances in that group will be terminated (they are stopped and removed from the cluster). This will also cause pods that were running on the `t3.medium` instances to be evicted and rescheduled onto the new nodes, as long as the pods are not marked as non-preemptible or have persistent volume claims that tie them to specific nodes.
+- **Pod Eviction and Rescheduling**: The evicted pods will attempt to reschedule on the available `t3.nano` nodes in the new group. Kubernetes will look for resources to schedule the pods on the new nodes. If there are not enough resources on the new `t3.nano` nodes (e.g., due to resource constraints), Kubernetes may delay rescheduling those pods or may not be able to schedule them at all.
+
+---
+
+#### 3. What Happens with the Pods During the Change?
+- **Before Deletion of the Old Group**: The pods running on the old nodes (`t3.medium`) will continue to run without interruption as long as the node group exists and the EC2 instances are active.
+- **After Scaling to Zero and Deleting the Old Node Group**: Once the old node group is deleted and the EC2 instances are terminated, any pods that were running on those instances will be evicted. Kubernetes will then attempt to reschedule them onto the new `t3.nano` nodes in the new node group.
+   - If there are sufficient resources in the `t3.nano` node group to accommodate the pods, they will be scheduled without issue.
+   - If there are insufficient resources (since `t3.nano` is much smaller than `t3.medium`), some pods might fail to reschedule, or you could encounter resource-related issues.
+
+---
+
+#### 4. What Will Happen to the Application During These Changes?
+- **No Downtime (Ideally)**: If your Kubernetes deployment is configured correctly (with proper replica sets or deployments), the application should not experience downtime during the node transition, assuming there are sufficient resources in the new node group to handle the pods.
+- **Pod Rescheduling**: As the pods are evicted and rescheduled to the new nodes, there might be a brief moment of disruption while they are moved, but Kubernetes will ensure that the desired number of replicas is maintained, so the application should automatically recover.
+   - If the application is stateless, this rescheduling process should be seamless with minimal or no downtime.
+   - If the application is stateful (e.g., using persistent volumes), Kubernetes will attempt to migrate the stateful pods to the new nodes, but there could be issues if the volumes aren't correctly attached or if the application can't recover quickly enough.
+
+---
+
+#### 5. Things to Consider and Possible Risks:
+- **Pod Disruption**: If you have stateful applications or pods with persistent storage (e.g., EBS volumes), make sure that they are properly rescheduled and that the volume attachments are handled correctly.
+- **Resource Limits**: The new `t3.nano` instances are significantly smaller in terms of CPU and memory compared to `t3.medium`. If your pods require more resources than the `t3.nano` instance can provide, this could result in failed pod scheduling or insufficient resources errors.
+- **Scaling Considerations**: If the application doesn't scale well with fewer resources or if you haven't accounted for the resource requirements of your application, you may experience issues after the scaling down.
+- **Cluster Autoscaler (If Enabled)**: If you are using the Cluster Autoscaler in your EKS cluster, it might attempt to automatically scale the cluster and bring up additional nodes if the pods cannot be scheduled due to resource constraints. This will depend on your configuration.
+
+---
+
+#### Summary of What Happens:
+- Pods on the old node group (`t3.medium`) continue running until the node group is deleted.
+- After deleting the old node group, pods running on the `t3.medium` instances are evicted and Kubernetes will try to reschedule them on the new `t3.nano` nodes.
+- If there are sufficient resources on the new `t3.nano` nodes, application downtime should be minimal (depending on your setup).
+- If there are resource constraints, some pods may not be able to reschedule immediately, leading to potential application downtime or issues.
+
+To ensure smooth transitions, consider testing the impact in a staging environment before making changes in production, especially with scaling to smaller instance types.
+
+---
+
+## Conclusion:
+When reducing the size of your EKS nodes by changing the instance type and adjusting the desired capacity, it's important to understand the potential impacts on your cluster, pods, and application. While the process can be smooth, there are risks such as pod eviction, resource constraints, and brief disruptions during the transition.
+
+If the new t3.nano nodes have sufficient resources to handle the workloads, the application can continue running with minimal downtime. However, if there are insufficient resources, some pods might fail to reschedule, which could lead to application downtime or performance issues.
+
+To ensure a seamless transition, carefully plan the scaling process, test the changes in a staging environment, and consider using Kubernetes features like replica sets or cluster autoscalers to minimize disruptions. Properly managing stateful applications, persistent volumes, and resource limits is also crucial to prevent potential issues during the scaling process.

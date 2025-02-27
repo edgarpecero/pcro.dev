@@ -1,5 +1,5 @@
 ---
-title: "Project Blog: Java Microservices with Spring Boot on Kubernetes"
+title: "Java Microservices with Spring Boot on Kubernetes"
 publishedAt: "2024-10-29"
 summary: "A scalable microservices-based e-commerce solution for order processing and notifications."
 team:
@@ -25,43 +25,93 @@ In this guide, we will walk through the process of deploying Java microservices 
 
 ## Step 2: Install AWS CLI
 
-AWS CLI allows you to interact with AWS services via the terminal.
+AWS CLI allows you to interact with AWS services via the terminal. 
 
-### Install AWS CLI v2
+[Installing or updating to the latest version of the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
+
+**Install AWS CLI v2**
 
 - **Linux/macOS:**
-  ```bash
-  curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-  unzip awscliv2.zip
-  sudo ./aws/install
-  ```
+
+<CodeBlock className="my-24"
+    compact
+    codeInstances={[
+        {
+            code: 'curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"\nunzip awscliv2.zip\nsudo ./aws/install',
+            label: 'Linux',
+            language: 'bash'
+        },
+    ]}
+    copyButton
+/>
+
 - **macOS (Homebrew):**
-  ```bash
-  brew install awscli
-  ```
+
+<CodeBlock className="my-24"
+    compact
+    codeInstances={[
+        {
+            code: 'brew install awscli',
+            label: 'brew install awscli',
+            language: 'bash'
+        },
+    ]}
+    copyButton
+/>
+
 - **Windows:** Use the installer or Windows Package Manager (`winget`).
 
-### Verify Installation
+**Verify Installation**
 
 Run:
-```bash
-aws --version
-```
-Expected output: `aws-cli/2.x.x`.
+<CodeBlock className="my-24"
+    compact
+    codeInstances={[
+        {
+            code: 'aws --version',
+            label: 'aws --version',
+            language: 'bash'
+        },
+    ]}
+    copyButton
+/>
 
-### Configure AWS CLI
+Expected output:
+<CodeBlock className="my-24"
+    compact
+    codeInstances={[
+        {
+            code: 'aws-cli/2.x.x',
+            label: 'aws-cli/2.x.x',
+            language: 'bash'
+        },
+    ]}
+    copyButton={false}
+/>
+
+**Configure AWS CLI**
 
 1. Create an IAM user with programmatic access.
 2. Assign the `AdministratorAccess` policy.
 3. Configure AWS CLI:
-   ```bash
-   aws configure
-   ```
-   Provide:
-   - Access Key ID
-   - Secret Access Key
-   - Default region (e.g., `us-west-2`)
-   - Default output format (`json`).
+
+  <CodeBlock className="my-24"
+      compact
+      codeInstances={[
+          {
+              code: 'aws configure',
+              label: 'aws configure',
+              language: 'bash'
+          },
+      ]}
+      copyButton
+  />
+
+Provide:
+1. Access Key ID
+2. Secret Access Key
+3. Default region (e.g., `us-west-2`)
+4. Default output: just hit Enter or format (`json`).
 
 ---
 
@@ -69,74 +119,152 @@ Expected output: `aws-cli/2.x.x`.
 
 Docker is essential for containerizing microservices.
 
-### Install Docker
+**Install Docker**
 
 - **Linux:**
-  ```bash
-  sudo apt update
-  sudo apt install docker.io
-  ```
+  <CodeBlock className="my-24"
+      compact
+      codeInstances={[
+          {
+              code: 'sudo apt update\nsudo apt install docker.io',
+              label: 'sudo apt update\nsudo apt install docker.io',
+              language: 'bash'
+          },
+      ]}
+      copyButton
+  />
+
   Enable and start Docker:
-  ```bash
-  sudo systemctl start docker
-  sudo systemctl enable docker
-  ```
+  <CodeBlock className="my-24"
+      compact
+      codeInstances={[
+          {
+              code: 'sudo systemctl start docker\nsudo systemctl enable docker',
+              label: 'sudo systemctl start docker\nsudo systemctl enable docker',
+              language: 'bash'
+          },
+      ]}
+      copyButton
+  />
 
 - **macOS:**
-  ```bash
-  brew install --cask docker
-  ```
+  <CodeBlock className="my-24"
+      compact
+      codeInstances={[
+          {
+              code: 'brew install --cask docker',
+              label: 'brew install --cask docker',
+              language: 'bash'
+          },
+      ]}
+      copyButton
+  />
 
-### Verify Installation
+**Verify Installation**
 
 Run:
-```bash
-docker --version
-```
-Expected output: `Docker version xx.xx`.
+  <CodeBlock className="my-24"
+      compact
+      codeInstances={[
+          {
+              code: 'docker --version',
+              label: 'docker --version',
+              language: 'bash'
+          },
+      ]}
+      copyButton
+  />
+Expected output:
+  <CodeBlock className="my-24"
+      compact
+      codeInstances={[
+          {
+              code: 'Docker version xx.xx',
+              label: 'Docker version xx.xx',
+              language: 'bash'
+          },
+      ]}
+      copyButton={false}
+  />
 
 ---
 
 ## Step 4: Install Kubernetes Tools
 
-### Install kubectl
+**Install kubectl**
 
 `kubectl` is used to manage Kubernetes clusters.
 
 - **Linux/macOS:**
-  ```bash
-  curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-  sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
-  ```
-
+  <CodeBlock className="my-24"
+      compact
+      codeInstances={[
+          {
+              code: 'curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"\nsudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl',
+              label: 'kubectl',
+              language: 'bash'
+          },
+      ]}
+      copyButton
+  />
 - **macOS (Homebrew):**
-  ```bash
-  brew install kubectl
-  ```
+  <CodeBlock className="my-24"
+      compact
+      codeInstances={[
+          {
+              code: 'brew install kubectl',
+              label: 'brew install kubectl',
+              language: 'bash'
+          },
+      ]}
+      copyButton
+  />
 
-### Verify Installation
+**Verify Installation**
 
 Run:
-```bash
-kubectl version --client
-```
+<CodeBlock className="my-24"
+    compact
+    codeInstances={[
+        {
+            code: 'kubectl version --client',
+            label: 'kubectl version --client',
+            language: 'bash'
+        },
+    ]}
+    copyButton
+/>
 
-### Install eksctl
+**Install eksctl**
 
 `eksctl` simplifies creating and managing Amazon EKS clusters.
 
 - **Linux/macOS:**
-  ```bash
-  curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
-  sudo mv /tmp/eksctl /usr/local/bin
-  ```
+  <CodeBlock className="my-24"
+      compact
+      codeInstances={[
+          {
+              code: 'curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp\nsudo mv /tmp/eksctl /usr/local/bin',
+              label: 'eksctl',
+              language: 'bash'
+          },
+      ]}
+      copyButton
+  />
 
-### Verify Installation
+**Verify Installation**
 
-Run:
-```bash
-eksctl version
-```
+<CodeBlock className="my-24"
+    compact
+    codeInstances={[
+        {
+            code: 'eksctl version',
+            label: 'eksctl version',
+            language: 'bash'
+        },
+    ]}
+    copyButton
+/>
 
 ---
 
@@ -144,113 +272,179 @@ eksctl version
 
 Run the following command to create a Kubernetes cluster:
 
-```bash
-eksctl create cluster \
-  --name java-cluster \
-  --region us-west-2 \
-  --nodegroup-name java-nodes \
-  --node-type t3.medium \
-  --nodes 3 \
-  --nodes-min 1 \
-  --nodes-max 4 \
-  --managed
-```
+<CodeBlock className="my-24"
+    compact
+    codeInstances={[
+        {
+            code: 'eksctl create cluster \n  --name java-cluster \n  --region us-west-2 \n  --nodegroup-name java-nodes \n  --node-type t3.medium \n  --nodes 3 \n  --nodes-min 1 \n  --nodes-max 4 \n  --managed',
+            label: 'Create an EKS Cluster',
+            language: 'bash'
+        },
+    ]}
+    copyButton
+/>
+
+This command sets up an EKS cluster with 3 nodes, and the nodes can scale between 1 and 4 automatically.
 
 After creation, connect `kubectl` to the cluster:
 
-```bash
-aws eks --region us-west-2 update-kubeconfig --name java-cluster
-```
+<CodeBlock className="my-24"
+    compact
+    codeInstances={[
+        {
+            code: 'aws eks --region us-west-2 update-kubeconfig --name java-cluster',
+            label: 'connect kubectl',
+            language: 'bash'
+        },
+    ]}
+    copyButton
+/>
+
+You are now ready to manage the cluster using kubectl.
 
 ---
 
 ## Step 6: Build and Push Docker Images
 
-### Build the Docker Image
+**Build the Docker Image**
 
 1. Create a `Dockerfile` for your Spring Boot service:
-   ```dockerfile
-   FROM openjdk:17-jdk-slim
-   COPY target/myapp.jar /app.jar
-   ENTRYPOINT ["java", "-jar", "/app.jar"]
-   ```
+
+  <CodeBlock className="my-24"
+      compact
+      codeInstances={[
+          {
+              code: 'FROM openjdk:17-jdk-slim \nCOPY target/myapp.jar /app.jar \nENTRYPOINT ["java", "-jar", "/app.jar"]',
+              label: 'Build the Docker Image',
+              language: 'bash'
+          },
+      ]}
+      copyButton
+  />
 
 2. Build the Docker image:
-   ```bash
-   docker build -t my-spring-boot-app .
-   ```
 
-### Push to AWS Elastic Container Registry (ECR)
+  <CodeBlock className="my-24"
+      compact
+      codeInstances={[
+          {
+              code: 'docker build -t my-spring-boot-app .',
+              label: 'build docker img',
+              language: 'bash'
+          },
+      ]}
+      copyButton
+  />
+
+**Push to AWS Elastic Container Registry (ECR)**
 
 1. Authenticate to ECR:
-   ```bash
-   aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin <your-account-id>.dkr.ecr.us-west-2.amazonaws.com
-   ```
+
+  <CodeBlock className="my-24"
+      compact
+      codeInstances={[
+          {
+              code: 'aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin **your-account-id**.dkr.ecr.us-west-2.amazonaws.com',
+              label: 'autenticate ECR',
+              language: 'bash'
+          },
+      ]}
+      copyButton
+  />
 
 2. Create an ECR repository:
-   ```bash
-   aws ecr create-repository --repository-name spring-boot-service --region us-west-2
-   ```
+
+  <CodeBlock className="my-24"
+      compact
+      codeInstances={[
+          {
+              code: 'aws ecr create-repository --repository-name spring-boot-service --region us-west-2',
+              label: 'create an ECR repo',
+              language: 'bash'
+          },
+      ]}
+      copyButton
+  />
 
 3. Tag and push the image:
-   ```bash
-   docker tag my-spring-boot-app:latest <your-account-id>.dkr.ecr.us-west-2.amazonaws.com/spring-boot-service:latest
-   docker push <your-account-id>.dkr.ecr.us-west-2.amazonaws.com/spring-boot-service:latest
-   ```
+
+  <CodeBlock className="my-24"
+    compact
+    codeInstances={[
+        {
+            code: 'docker tag my-spring-boot-app:latest **your-account-id**.dkr.ecr.us-west-2.amazonaws.com/spring-boot-service:latest \ndocker push **your-account-id**.dkr.ecr.us-west-2.amazonaws.com/spring-boot-service:latest',
+            label: 'Tag and push the image',
+            language: 'bash'
+        },
+    ]}
+    copyButton
+  />
 
 ---
 
 ## Step 7: Deploy on Kubernetes
 
 1. Create a Kubernetes deployment:
-   ```yaml
-   apiVersion: apps/v1
-   kind: Deployment
-   metadata:
-     name: spring-boot-app
-   spec:
-     replicas: 3
-     selector:
-       matchLabels:
-         app: spring-boot-app
-     template:
-       metadata:
-         labels:
-           app: spring-boot-app
-       spec:
-         containers:
-         - name: spring-boot-app
-           image: <your-account-id>.dkr.ecr.us-west-2.amazonaws.com/spring-boot-service:latest
-           ports:
-           - containerPort: 8080
-   ```
+
+  <CodeBlock className="my-24"
+      compact
+      codeInstances={[
+          {
+              code: 'apiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: spring-boot-app\nspec:\n  replicas: 3\n  selector:\n    matchLabels:\n      app: spring-boot-app\n  template:\n    metadata:\n      labels:\n        app: spring-boot-app\n    spec:\n      containers:\n      - name: spring-boot-app\n        image: **your-account-id**.dkr.ecr.us-west-2.amazonaws.com/spring-boot-service:latest\n        ports:\n        - containerPort: 8080',
+              label: 'Create a Kubernetes deployment',
+              language: 'bash'
+          },
+      ]}
+      copyButton
+  />  
 
 2. Apply the deployment:
-   ```bash
-   kubectl apply -f deployment.yaml
-   ```
+
+<CodeBlock className="my-24"
+    compact
+    codeInstances={[
+        {
+            code: 'kubectl apply -f deployment.yaml',
+            label: 'kubectl apply -f deployment.yaml',
+            language: 'bash'
+        },
+    ]}
+    copyButton
+/>
 
 3. Expose the service:
-   ```yaml
-   apiVersion: v1
-   kind: Service
-   metadata:
-     name: spring-boot-service
-   spec:
-     type: LoadBalancer
-     selector:
-       app: spring-boot-app
-     ports:
-     - protocol: TCP
-       port: 80
-       targetPort: 8080
-   ```
-   ```bash
-   kubectl apply -f service.yaml
-   ```
+
+<CodeBlock className="my-24"
+    compact
+    codeInstances={[
+        {
+            code: 'apiVersion: v1\nkind: Service\nmetadata:\n  name: spring-boot-service\nspec:\n  type: LoadBalancer\n  selector:\n    app: spring-boot-app\n  ports:\n  - protocol: TCP\n    port: 80\n    targetPort: 8080',
+            label: 'Epose the service',
+            language: 'bash'
+        },
+    ]}
+    copyButton
+/>
+
+<CodeBlock className="my-24"
+    compact
+    codeInstances={[
+        {
+            code: 'kubectl apply -f service.yaml',
+            label: 'kubectl apply -f service.yaml',
+            language: 'bash'
+        },
+    ]}
+    copyButton
+/>
 
 ---
 
 ## Conclusion
 
 Congratulations! You have successfully deployed a Java microservice using Spring Boot on Kubernetes with AWS. This setup ensures scalability, resilience, and high performance for modern cloud applications.
+
+---
+
+- Main Project page: [Scalable Saas on AWS with Springboot, React, Kubernetes](/blog/build-saas-on-AWS)
+- Next Step: will continue!

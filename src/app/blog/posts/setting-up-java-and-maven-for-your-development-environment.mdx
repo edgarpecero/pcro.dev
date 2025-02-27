@@ -17,16 +17,16 @@ This guide will walk you through installing Java, setting up Maven, and configur
 
 ## Installing Java
 
-### Download Java
+**Download Java**
 - Visit the OpenJDK website or a preferred provider (e.g., Oracle, AdoptOpenJDK).
 - Download the latest Java 8 MSI installer. This guide uses Java 8 update 8u432-b06.
 
-### Install Java
+**Install Java**
 - Run the downloaded `.msi` installer.
 - Follow the installation wizard’s prompts, using default settings.
 - Java is typically installed in `C:\Program Files\Java\jdk<version>` or `C:\Program Files\OpenLogic\jdk-8.0.432.06-hotspot`.
 
-### Set `JAVA_HOME` Environment Variable
+**Set `JAVA_HOME` Environment Variable**
 1. Open **Control Panel > System and Security > System > Advanced System Settings**.
 2. Under **System Properties**, go to the **Advanced** tab and click **Environment Variables**.
 3. Add a new **System variable**:
@@ -34,12 +34,20 @@ This guide will walk you through installing Java, setting up Maven, and configur
    - **Variable Value:** `C:\Program Files\OpenLogic\jdk-8.0.432.06-hotspot` (without `\bin`).
 4. Update the `Path` variable by adding `%JAVA_HOME%\bin`.
 
-### Verify Java Installation
+**Verify Java Installation**
 Open a new terminal and run:
 
-```bash
-java -version
-```
+<CodeBlock className="my-24"
+    compact
+    codeInstances={[
+        {
+            code: 'java -version',
+            label: 'java -version',
+            language: 'bash'
+        },
+    ]}
+    copyButton
+/>
 
 You should see version details confirming Java is correctly installed.
 
@@ -47,26 +55,35 @@ You should see version details confirming Java is correctly installed.
 
 ## Installing Maven
 
-### Download Maven
+**Download Maven**
 - Visit the [Apache Maven](https://maven.apache.org/download.cgi) website and download the latest binary `.zip` file.
 
-### Install Maven
+**Install Maven**
 - Extract the `.zip` file to a folder (e.g., `C:\Program Files\Maven`).
 - No admin privileges are needed if extracting within your user directory.
 
-### Set `MAVEN_HOME` and Update `PATH`
+**Set `MAVEN_HOME` and Update `PATH`**
 1. Open **Environment Variables** in System Properties.
 2. Add a new **System variable**:
    - **Variable Name:** `MAVEN_HOME`
    - **Variable Value:** `C:\Program Files\Maven`
 3. Update the `Path` variable by adding `%MAVEN_HOME%\bin`.
 
-### Verify Maven Installation
+**Verify Maven Installation**
 Open a new terminal and run:
 
-```bash
-mvn -version
-```
+<CodeBlock className="my-24"
+    compact
+    codeInstances={[
+        {
+            code: 'mvn -version',
+            label: 'mvn -version',
+            language: 'bash'
+        },
+    ]}
+    copyButton
+/>
+
 
 You should see version details confirming Maven is correctly installed.
 
@@ -74,37 +91,46 @@ You should see version details confirming Maven is correctly installed.
 
 ## Creating and Configuring a Java Project with Maven in IntelliJ IDEA
 
-### Open IntelliJ IDEA
+**Open IntelliJ IDEA**
 Use the terminal command (if configured in `PATH`):
 
-```bash
-idea .
-```
+<CodeBlock className="my-24"
+    compact
+    codeInstances={[
+        {
+            code: 'idea .',
+            label: 'idea .',
+            language: 'bash'
+        },
+    ]}
+    copyButton
+/>
 
 Or manually open **IntelliJ IDEA** and select **New Project**.
 
-### Create a New Maven Project
+**Create a New Maven Project**
 1. In the **New Project** wizard, select **Maven** as the project type.
 2. Configure:
    - **Group ID:** `org.example`
    - **Artifact ID:** `java-utils`
    - **JDK Version:** Ensure it points to the installed Java 8 JDK.
 
-### Add Dependencies (e.g., Lombok) in `pom.xml`
+**Add Dependencies (e.g., Lombok) in `pom.xml`**
 Open `pom.xml` in the project root and add:
 
-```xml
-<dependencies>
-  <dependency>
-    <groupId>org.projectlombok</groupId>
-    <artifactId>lombok</artifactId>
-    <version>1.18.24</version>
-    <scope>provided</scope>
-  </dependency>
-</dependencies>
-```
+<CodeBlock className="my-24"
+    compact
+    codeInstances={[
+        {
+            code: '<dependencies>\n  <dependency>\n    <groupId>org.projectlombok</groupId>\n    <artifactId>lombok</artifactId>\n    <version>1.18.24</version>\n    <scope>provided</scope>\n  </dependency>\n</dependencies> ',
+            label: 'dependencies',
+            language: 'bash'
+        },
+    ]}
+    copyButton
+/>
 
-### Validate the Project Setup
+**Validate the Project Setup**
 - Go to **View > Tool Windows > Maven** in IntelliJ IDEA.
 - Build the project by selecting **Maven Lifecycle > compile**.
 
@@ -112,38 +138,69 @@ Open `pom.xml` in the project root and add:
 
 ## Using Git from Terminal for Version Control
 
-### Initialize a Git Repository
+**Initialize a Git Repository**
 Run the following in your project folder:
 
-```bash
-git init
-```
+<CodeBlock className="my-24"
+    compact
+    codeInstances={[
+        {
+            code: 'git init',
+            label: 'git init',
+            language: 'bash'
+        },
+    ]}
+    copyButton
+/>
 
-### Add a `.gitignore` File
-Include entries like:
+**Add a `.gitignore` File**
+Include entries like `.idea/`, `target/` and other IDE-specific files.
 
-```
-.idea/
-target/
-```
+**Create a New Repository on GitHub and Push Your Code**
+Link the local repository to a GitHub repo:
 
-### Create a New Repository on GitHub and Push Your Code
+<CodeBlock className="my-24"
+    compact
+    codeInstances={[
+        {
+            code: 'git remote add origin https://github.com/yourusername/java-utils.git\ngit branch -M main\ngit push -u origin main',
+            label: 'git commands',
+            language: 'bash'
+        },
+    ]}
+    copyButton
+/>
 
-```bash
-git remote add origin https://github.com/yourusername/java-utils.git
-git branch -M main
-git push -u origin main
-```
-
-### Basic Git Workflow
+**Basic Git Workflow**
 Stage and commit changes:
 
-```bash
-git add .
-git commit -m "Initial commit"
-```
+<CodeBlock className="my-24"
+    compact
+    codeInstances={[
+        {
+            code: 'git add .\ngit commit -m "Initial commit"',
+            label: 'git add .',
+            language: 'bash'
+        },
+    ]}
+    copyButton
+/>
 
 Push updates to GitHub:
 
-```bash
-git push origin main
+<CodeBlock className="my-24"
+    compact
+    codeInstances={[
+        {
+            code: 'git push origin main',
+            label: 'git push origin main',
+            language: 'bash'
+        },
+    ]}
+    copyButton
+/>
+
+---
+
+- Main Project page: [Scalable Saas on AWS with Springboot, React, Kubernetes](/blog/build-saas-on-AWS)
+- Next Step: [Order Service Development with Spring Boot](/blog/springboot-order-management-service-development)

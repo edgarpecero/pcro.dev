@@ -1,0 +1,106 @@
+---
+mdxname: a1-installing-and-configure-aws-cli-on-windows-11.mdx
+title: "Installing and Configuring AWS CLI on Windows 11"
+publishedAt: "2025-02-26"
+summary: "This guide covers the installation and configuration of AWS CLI v2 on Windows 11. AWS CLI enables you to interact with AWS services from your command line, making it a powerful tool for cloud management and automation."
+team:
+  - name: "Edgar Pecero"
+    role: "Full Stack Developer"
+    avatar: "/images/avatar.jpg"
+tag: "Cloud"
+children: []
+---
+
+## Introduction
+
+This guide covers the installation and configuration of AWS CLI v2 on Windows 11. AWS CLI enables you to interact with AWS services from your command line, making it a powerful tool for cloud management and automation.
+
+---
+
+## 1. Prerequisites
+- Administrator privileges on Windows 11.
+- An AWS account for configuring credentials.
+
+## 2. Downloading and Installing AWS CLI v2
+
+### Step 1: Download the AWS CLI Installer
+- Visit the [AWS CLI v2 download page](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) to download the Windows installer.
+
+### Step 2: Install AWS CLI
+- Run the downloaded `.msi` file and follow the installation prompts.
+
+## 3. Configuring AWS CLI
+
+Once installed, configure the CLI to interact with your AWS account.
+
+### Step 1: Open Command Prompt or PowerShell and run:
+
+<CodeBlock className="my-24"
+    compact
+    codeInstances={[
+        {
+            code: 'aws configure',
+            label: 'aws-configure',
+            language: 'bash'
+        },
+    ]}
+    copyButton
+/>
+
+### Step 2:  Provide your credentials:
+
+- **AWS Access Key ID**
+- **AWS Secret Access Key**
+- **Default region name** (e.g., us-east-1)
+- **Default output format** (e.g., json) or skip pressing down enter key.
+
+---
+
+## 4. Verifying Installation:
+
+To confirm the AWS CLI installation and configuration, run:
+
+<CodeBlock className="my-24"
+    compact
+    codeInstances={[
+        {
+            code: 'aws sts get-caller-identity',
+            label: 'aws sts get-caller-identity',
+            language: 'bash'
+        },
+    ]}
+    copyButton
+/>
+
+You should see account details, confirming the CLI is set up.
+
+<CodeBlock className="my-24"
+    compact
+    codeInstances={[
+        {
+            code: '$ aws sts get-caller-identity \n { \n "UserId": "AXXXXXXXXXXXXXXXXZ", \n "Account": "7XXXXXXXXX", \n "Arn": "arn:aws:iam::7XXXXXXXXX:user/edgar" \n }',
+            label: 'aws identity respone',
+            language: 'bash'
+        },
+    ]}
+    copyButton
+/>
+
+
+
+## 5. Troubleshooting
+
+### Error: ‘aws’ is not recognized as an internal or external command
+- Ensure AWS CLI is in your system’s PATH.
+
+### Incorrect or Missing Credentials
+- Double-check that you’ve entered the correct AWS Access Key and Secret Key.
+
+## 6. Conclusion
+
+With AWS CLI installed and configured, you can now access and manage AWS resources directly from your command line.
+
+---
+
+- Main Project page: [Scalable Saas on AWS with Springboot, React, Kubernetes](/blog/build-saas-on-AWS)
+- Next Step: [Installing and Configuring kubectl on Windows 11](/blog/a2-installing-and-configuring-kubectl-on-windows-11)

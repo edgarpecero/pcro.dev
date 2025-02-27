@@ -1,0 +1,278 @@
+---
+mdxname: springboot-order-management-service-development.mdx
+title: "Order Service Development with Spring Boot"
+publishedAt: "2024-10-28"
+summary: "This document details the process of creating a Spring Boot application for managing e-commerce orders. The application is built using Java 17 and will be deployed as a JAR file. The environment utilizes OpenLogic OpenJDK 17.0.13."
+team:
+  - name: "Edgar Pecero"
+    role: "Full Stack Developer"
+    avatar: "/images/avatar.jpg"
+tag: "Cloud"
+children: []
+---
+
+## Introduction
+
+This document details the process of creating a Spring Boot application for managing e-commerce orders. The application is built using Java 17 and will be deployed as a JAR file. The environment utilizes OpenLogic OpenJDK 17.0.13.
+
+---
+
+## Development Steps
+
+### 1. Project Setup  
+
+**Project Type:** Spring Boot Application  
+**Packaging:** JAR  
+**Java Version:** OpenLogic OpenJDK 17.0.13  
+**Spring Boot Version:** 3.3.6  
+
+### 2. Initializing the Project  
+
+To create the Spring Boot application, I used Spring Initializr with the following configurations:  
+
+**Project Metadata:**  
+
+**Group:** com.amazonaws  
+**Artifact:** order-service  
+**Name:** order-service  
+**Description:** The Order Service in com.amazonaws manages e-commerce order lifecycles, emitting status events and supporting scalable, resilient deployment with Spring Boot on AWS.  
+**Package Name:** com.amazonaws.order-service  
+**Packaging:** JAR  
+**Java Version:** 17  
+
+### 3. Generating the Project  
+
+After setting the desired configurations, I generated the project and extracted the contents. I then initialized a Git repository in the project directory using:
+
+<CodeBlock className="my-24"
+    compact
+    codeInstances={[
+        {
+            code: 'git init',
+            label: 'git init',
+            language: 'bash'
+        },
+    ]}
+    copyButton
+/>
+
+### 4. Project Structure  
+
+The generated project includes the following key directories and files:  
+
+**src/main/java:** Contains the application source code.  
+**src/main/resources:** Holds configuration files (e.g., application.properties).  
+**pom.xml:** Maven configuration file that manages project dependencies.  
+
+### 5. Modifications  
+
+Since I opted for a JAR deployment instead of a WAR file, I made the following adjustments:  
+
+**Removed:** ServletInitializer.java (not needed for JAR deployment).  
+**Kept:** Core structure intact for easy future updates and modifications.  
+
+### 6. Dependencies  
+
+I ensured that the pom.xml file included essential dependencies required for the application, such as:
+
+<CodeBlock className="my-24"
+    compact
+    codeInstances={[
+        {
+            code: '<dependencies>\n  <dependency>\n    <groupId>org.springframework.boot</groupId>\n    <artifactId>spring-boot-starter</artifactId>\n  </dependency>\n  <dependency>\n    <groupId>org.springframework.boot</groupId>\n    <artifactId>spring-boot-starter-web</artifactId>\n  </dependency>\n  <dependency>\n    <groupId>org.springframework.boot</groupId>\n    <artifactId>spring-boot-starter-data-jpa</artifactId>\n  </dependency>\n  <dependency>\n    <groupId>org.springframework.boot</groupId>\n    <artifactId>spring-boot-starter-test</artifactId>\n    <scope>test</scope>\n  </dependency>\n</dependencies>',
+            label: 'dependencies pom.mxl',
+            language: 'bash'
+        },
+    ]}
+    copyButton
+/>
+
+### 7. Running the Application
+
+The application can be run using Maven with the following command:
+
+<CodeBlock className="my-24"
+    compact
+    codeInstances={[
+        {
+            code: 'mvn spring-boot:run',
+            label: 'mvn spring-boot:run',
+            language: 'bash'
+        },
+    ]}
+    copyButton
+/>
+
+Alternatively, after building the JAR file, it can be executed with:
+
+<CodeBlock className="my-24"
+    compact
+    codeInstances={[
+        {
+            code: 'java -jar target/order-service-0.0.1-SNAPSHOT.jar',
+            label: 'java -jar target/order-service-0.0.1-SNAPSHOT.jar',
+            language: 'bash'
+        },
+    ]}
+    copyButton
+/>
+
+### 8. Commands for Building and Running
+
+Here are the commands you will typically use during development:
+
+- **Clean the project**:
+
+<CodeBlock className="my-24"
+    compact
+    codeInstances={[
+        {
+            code: 'mvn clean',
+            label: 'mvn clean',
+            language: 'bash'
+        },
+    ]}
+    copyButton
+/>
+
+- **Build the project** (create a JAR):
+
+<CodeBlock className="my-24"
+    compact
+    codeInstances={[
+        {
+            code: 'mvn package',
+            label: 'mvn package',
+            language: 'bash'
+        },
+    ]}
+    copyButton
+/>
+
+- **Install dependencies and build the project**:
+
+<CodeBlock className="my-24"
+    compact
+    codeInstances={[
+        {
+            code: 'mvn clean install',
+            label: 'mvn clean install',
+            language: 'bash'
+        },
+    ]}
+    copyButton
+/>
+
+- **Run the application using Maven**:
+
+<CodeBlock className="my-24"
+    compact
+    codeInstances={[
+        {
+            code: 'mvn spring-boot:run',
+            label: 'mvn spring-boot:run',
+            language: 'bash'
+        },
+    ]}
+    copyButton
+/>
+
+- **Run the JAR file**:
+
+<CodeBlock className="my-24"
+    compact
+    codeInstances={[
+        {
+            code: 'java -jar target/order-service-0.0.1-SNAPSHOT.jar',
+            label: 'java -jar target/order-service-0.0.1-SNAPSHOT.jar',
+            language: 'bash'
+        },
+    ]}
+    copyButton
+/>
+
+### 9. Troubleshooting Maven and Application Running Issues  
+
+If you encounter issues while running your Maven commands or the Spring Boot application, consider the following troubleshooting tips:  
+
+**Common Maven Errors**  
+
+1. **No plugin found for prefix 'springboot':**  
+    - Ensure that you have added the Spring Boot Maven plugin in your pom.xml:  
+
+<CodeBlock className="my-24"
+    compact
+    codeInstances={[
+        {
+            code: '<plugin>\n  <groupId>org.springframework.boot</groupId>\n  <artifactId>spring-boot-maven-plugin</artifactId>\n  <version>3.3.6</version>\n</plugin>',
+            label: 'maven depencies',
+            language: 'bash'
+        },
+    ]}
+    copyButton
+/>
+
+    - Run the command with -e for detailed error logs: 
+
+<CodeBlock className="my-24"
+    compact
+    codeInstances={[
+        {
+            code: 'mvn spring-boot:run -e',
+            label: 'mvn spring-boot:run -e',
+            language: 'bash'
+        },
+    ]}
+    copyButton
+/>
+
+2. **Dependency resolution issues:**  
+    - If you get errors about missing dependencies, try clearing your local Maven repository by deleting the .m2/repository directory and running:
+
+<CodeBlock className="my-24"
+    compact
+    codeInstances={[
+        {
+            code: 'mvn clean install -U',
+            label: 'mvn clean install -U',
+            language: 'bash'
+        },
+    ]}
+    copyButton
+/>
+
+3. **Build failures**:
+    - Check the error message for details. Sometimes the issue could be due to code errors or missing configurations.
+
+**Application Run Issues**
+
+1. **Java class not found**:
+    - Ensure your main application class is annotated with @SpringBootApplication and located in the correct package.
+
+2. **Port already in use**:
+    - If you encounter errors related to the port being already in use, consider changing the port in the application.properties file:
+
+<CodeBlock className="my-24"
+    compact
+    codeInstances={[
+        {
+            code: 'server.port=8081',
+            label: 'server.port=8081',
+            language: 'bash'
+        },
+    ]}
+    copyButton
+/>
+
+3. **Application fails to start**:
+Check the logs for stack traces or specific exceptions indicating configuration or dependency issues.
+
+
+## 10. Conclusion
+
+The initial setup for the Spring Boot order management service has been successfully completed, with the application configured for future development and deployment on AWS EKS. The application is now ready to be enhanced with additional features as needed.
+
+---
+
+- Main Project page: [Scalable Saas on AWS with Springboot, React, Kubernetes](/blog/build-saas-on-AWS)
+- Next Step: [Java Microservices with Spring Boot on Kubernetes](/blog/java-microservices-with-springboot-on-kubernetes)

@@ -1,0 +1,81 @@
+---
+mdxname: best-ec2-instance-type-for-running-a-203-mb-springboot-docker-img.mdx
+title: "Best EC2 Instance Type for Running a 203 MB Spring Boot Docker Image"
+publishedAt: "2024-10-30"
+summary: "Best EC2 Instance Type for Running a 203 MB Spring Boot Docker Image"
+team:
+  - name: "Edgar Pecero"
+    role: "Full Stack Developer"
+    avatar: "/images/avatar.jpg"
+tag: "Cloud"
+children: []
+---
+
+## Introduction
+
+When choosing an EC2 instance for your Spring Boot application running in a Docker container, the instance type should be sized according to both the container resource requirements (memory, CPU) and the specific workload (e.g., how much traffic you expect the app to handle). Here are the considerations:
+
+## Spring Boot Application Resource Requirements:
+
+A 203 MB Spring Boot image is relatively small in terms of storage, but the resource requirements (CPU and memory) depend on the application’s workload (e.g., number of incoming requests, complexity of business logic, number of threads, etc.).
+
+You should ensure that the memory and CPU assigned to the EC2 instances are sufficient for the workload to avoid performance degradation.
+
+## Instance Type Recommendations:
+
+Since t3.nano is the smallest instance in the t3 series, it may work for small, light workloads, but it might be insufficient for any significant processing. Below are the recommended instance types based on typical small app requirements:
+
+1. t3.nano (Small, Cost-Effective):
+
+- **CPU**: 2 vCPUs  
+- **Memory**: 0.5 GB  
+
+Suitable for very small applications with low traffic. You may encounter issues with memory or CPU if the app grows or handles multiple concurrent requests.
+
+2. t3.micro:
+
+- **CPU**: 2 vCPUs  
+- **Memory**: 1 GB  
+
+Slightly more memory than t3.nano, which may be helpful if your application requires a bit more headroom for concurrency.
+
+3. t3.small:
+
+- **CPU**: 2 vCPUs  
+- **Memory**: 2 GB  
+
+Recommended for slightly larger or more resource-intensive applications. This would be better suited for a small Spring Boot app that could grow or has moderate traffic, as it provides more CPU and memory compared to the t3.nano or t3.micro.
+
+4. t3.medium:
+
+- **CPU**: 2 vCPUs  
+- **Memory**: 4 GB  
+
+**See more details on**: [AWS EC2 - InstanceTypes - T3](https://aws.amazon.com/ec2/instance-types/t3/)
+
+If you expect higher traffic, more simultaneous connections, or some complex background processing, you might need this larger instance type for better performance and scalability.
+
+## Choosing the Best Instance:
+
+For your small Spring Boot app with a 203 MB Docker image, I would recommend starting with t3.micro if you're just testing or expecting very low traffic.
+
+If your app grows or needs more resources (more concurrent users, background tasks, etc.), consider t3.small.
+
+If you plan to handle higher traffic or resource-heavy background tasks in the future, t3.medium could be the safer option.
+
+## CPU and Memory Considerations:
+
+If your app starts to experience performance bottlenecks, it's likely due to either CPU limits or memory constraints. You can monitor these metrics in CloudWatch and adjust the instance type accordingly.
+
+## Summary:
+
+- **Logs for resource issues**: You can check pod scheduling failures with `kubectl describe`, EKS logs in CloudWatch, and CloudWatch metrics for your EC2 instances.
+  
+- **Best instance type for your app**: For a small Spring Boot app, start with t3.micro or t3.small. If your app grows in traffic or complexity, move to t3.medium.
+
+---
+
+## Conclusion:  
+Remember that the AWS Free Tier gives you 750 hours per month for a t2.micro or t3.micro instance, which can be a cost-effective choice for testing small apps with low traffic.
+
+Additionally, the AWS Free Tier also offers 500 MB of storage per month for Amazon Elastic Container Registry (ECR), which can be useful for storing your Docker images without incurring additional charges for small-scale testing.

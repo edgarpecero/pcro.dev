@@ -1,0 +1,70 @@
+---
+mdxname: difference-between-file-storage-block-storage-andobject-storage.mdx
+title: "Difference Between File Storage, Block Storage, and Object Storage"
+publishedAt: "2025-02-01"
+summary: "AWS offers these three main types of stages. Each serves different use cases based on performance, scalability and access patters."
+team:
+  - name: "Edgar Pecero"
+    role: "Full Stack Developer"
+    avatar: "/images/avatar.jpg"
+tag: "Cloud"
+children: []
+---
+
+## Difference between File Storage, Block Storage and Object Storage on AWS.
+
+AWS offers these three main types of stages. Each serves different use cases based on performance, scalability and access patters.
+
+- **File Storage**: Best for shared storage and hierarchical file structure (folders and directories)
+- **Block Storage**: Best for databases and apps needing low-latency access.
+- **Object Storage**: Best for storing large amounts of unstructured data.
+
+---
+
+### 1. File Storage (e.g., AWS EFS, Amazon FSx)
+
+How it works?
+- Stores data in hierarchical structures
+- Uses NFS (Network File System) or SMB (Server Message Block) protocol
+- Multiple servers or instances can access the same file system
+
+Use Cases
+- Shared storage for multiple EC2 instances
+- Web apps that need centralized file access
+- Media processing and machine learning
+
+### 2. Block Storage (e.g. Amazon EBS)
+
+How it works?
+- Stores data in fixed-sized blocks (like a traditional hard drive)
+- Each block has an address but is managed independently
+- Commonly used with databases and transactional workloads
+- Typically attached to a single EC2 instance
+
+Use Cases
+- High-performance applications (e.g. MySQL, PostgreSQL)
+- Boot volumes for EC2 instances
+- Applications requiring fast, low-latency access
+
+### 3. Object Storage (e.g. Amazon S3)
+
+How it works?
+- Stores data as objects, each with metadata and a unique ID
+- No hierarchical structure; objects are stored in buckets.
+- Designed for high scalability and durability
+
+Use Cases
+- Static content hosting (e.g. images, videos, backups)
+- Data lakes and big data analytics
+- Archiving and long-term storage
+
+{/* ## Comparison Table
+
+| Feature                     | File Storage (EFS, FSx)       | Block Storage (EBS)            | Object Storage (S3)            |
+|-----------------------------|-------------------------------|--------------------------------|--------------------------------|
+| **Data Structure**          | Hierarchical (Folders)        | Blocks                         | Objects (Key-Value)            |
+| **Access Method**           | NFS, SMB                      | Directly attached              | API-based                      |
+| **Scalability**             | High (but limited by protocol)| Limited (must resize manually) | Virtually unlimited            |
+| **Performance**             | Medium                        | High (low latency)             | Medium-High (depends on S3 tier)|
+| **Use Cases**               | Shared storage, applications, ML | Databases, boot volumes       | Backups, media storage, data lakes |
+| **AWS Service**             | EFS, FSx                      | EBS                            | S3   */}

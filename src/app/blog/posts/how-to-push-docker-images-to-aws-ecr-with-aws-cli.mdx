@@ -1,0 +1,79 @@
+---
+mdxname: how-to-push-docker-images-to-aws-ecr-using-aws-cli.mdx
+title: "How to push Docker images to AWS ECR using AWS CLI"
+publishedAt: "2024-11-06"
+summary: "This post will help you to deploy the service, you'll need to upload your Docker image to AWS's Elastic Container Registry (ECR)."
+team:
+  - name: "Edgar Pecero"
+    role: "Full Stack Developer"
+    avatar: "/images/avatar.jpg"
+tag: "Cloud"
+children: []
+---
+
+## Introduction
+
+This post will help you to deploy the service, you'll need to upload your Docker image to AWS's Elastic Container Registry (ECR).
+---
+
+## 1. Authenticate to ECR:
+
+<CodeBlock className="my-24"
+    compact
+    codeInstances={[
+        {
+            code: 'aws ecr get-login-password --region us-west-2 \n| docker login --username AWS --password-stdin <your-account-id>.dkr.ecr.us-west-2.amazonaws.com',
+            label: 'Authenticate ecr',
+            language: 'bash'
+        },
+    ]}
+    copyButton
+/>
+
+## 2. Create an ECR Repository
+Create a repository in ECR for your service:
+
+<CodeBlock className="my-24"
+    compact
+    codeInstances={[
+        {
+            code: 'aws ecr create-repository --repository-name orders-service --region us-west-2',
+            label: 'ecr repository',
+            language: 'bash'
+        },
+    ]}
+    copyButton
+/>
+
+## 3. Tag and push your Docker image
+1. Tag your image:
+
+<CodeBlock className="my-24"
+    compact
+    codeInstances={[
+        {
+            code: 'docker tag orders-service:latest <your-account-id>.dkr.ecr.us-west-2.amazonaws.com/orders-service:latest',
+            label: 'tag docket img',
+            language: 'bash'
+        },
+    ]}
+    copyButton
+/>
+
+2. Push image
+
+<CodeBlock className="my-24"
+    compact
+    codeInstances={[
+        {
+            code: 'docker push <your-account-id>.dkr.ecr.us-west-2.amazonaws.com/orders-service:latest',
+            label: 'push docker img',
+            language: 'bash'
+        },
+    ]}
+    copyButton
+/>
+
+---
+
+Now you are ready to work with AWS ECR, happy coding!

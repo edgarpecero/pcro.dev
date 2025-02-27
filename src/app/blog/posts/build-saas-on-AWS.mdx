@@ -1,0 +1,88 @@
+---
+mdxname: build-saas-on-AWS.mdx
+title: "Scalable Saas on AWS with Springboot, React, Kubernetes"
+publishedAt: "2024-10-30"
+summary: "Microservices-based order management and notification platform for e-commerce, built with Spring Boot (Java) and React. Leveraging AWS, Kubernetes, and Terraform for scalability, resilience, and automation. Includes CI/CD pipeline, unit testing, code quality, monitoring (Prometheus/Grafana), centralized logging (ELK/EFK), and fault-tolerant mechanisms like Circuit Breaker and Retry patterns"
+team:
+  - name: "Edgar Pecero"
+    role: "Full Stack Developer"
+    avatar: "/images/avatar.jpg"
+tag: "Cloud"
+children: []
+---
+
+## Introduction
+
+This project develops a microservices-based order management and notification platform for an e-commerce business, ensuring scalability, resilience, and high availability. Built with Spring Boot (Java) and React, the system leverages AWS cloud infrastructure, Kubernetes for container orchestration, and Terraform for infrastructure automation. It integrates a CI/CD pipeline with unit testing, code quality analysis, and automated deployments, following SOLID principles and Site Reliability Engineering (SRE) best practices. Additional features include message queue-based event handling, monitoring with Prometheus and Grafana, centralized logging (ELK/EFK stack), and fault-tolerant mechanisms like Circuit Breaker and Retry patterns.
+
+---
+
+
+## Project Description
+
+### Microservices:
+
+#### Order Microservice:
+- Manages the lifecycle of customer orders, including creation, updates, and queries.
+- Generates status change events via a message queue.
+
+#### Notification Microservice:
+- Listens for events from the message queue and sends notifications (email/SMS).
+
+### Functional and Non-Functional Requirements:
+- **Unit Testing:** JUnit for Java, integrated into the CI/CD pipeline.
+- **Programming Best Practices:** SOLID principles.
+- **Containerized Deployment:** Docker and Kubernetes.
+- **CI/CD Pipeline:** Jenkins/GitHub Actions.
+- **Infrastructure as Code:** Terraform or CloudFormation.
+- **Resilience:** Failure recovery and fault tolerance mechanisms.
+- **Monitoring & Alerts:** Prometheus and Grafana.
+- **Scalability:** Horizontal scaling.
+
+---
+
+## Technologies Used
+
+- **Backend:** Java 21, Spring Boot 3.3.5
+- **Frontend:** React 18.3.1, Typescript 4.9.5
+- **Containerization:** Docker (AWS ECR), Kubernetes (AWS EKS).
+- **Automation & CI/CD:** GitHub Actions.
+- **Infrastructure:** AWS, Terraform, CloudFormation.
+- **Monitoring:** Prometheus, Grafana.
+- **Testing:** JUnit.
+- **Notifications:** Email/SMS simulated via logs (AWS SES & SNS).
+
+### Other Technologies:
+- **Secret Keys:** AWS Secrets Manager
+- **Database:** AWS Dynamo DB, AWS RDS (SQL Server) on branch **feature/migrate-to-sqlserver**
+- **Frontend Host:** AWS S3
+
+---
+
+## Guide Links:
+1. [Installing and Configuring AWS CLI on Windows 11](/blog/a1-installing-and-configure-aws-cli-on-windows-11)
+2. [Installing and Configuring kubectl on Windows 11](/blog/a2-installing-and-configuring-kubectl-on-windows-11)
+3. [Automating an Amazon VPC for EKS with CloudFormation](/blog/a3-automating-an-amazon-vpc-for-eks-with-cloudformation)
+4. [Configuring AWS CLI and Accessing Your EKS Cluster on Windows 11](/blog/a4-configuring-aws-cli-and-accessing-your-eks-cluster-on-windows-11)
+5. [Setting Up Java and Maven for Your Development Environment](/blog/setting-up-java-and-maven-for-your-development-environment)
+6. [Order Service Development with Spring Boot](/blog/springboot-order-management-service-development)
+7. [Java Microservices with Spring Boot on Kubernetes](/blog/java-microservices-with-springboot-on-kubernetes)
+
+## Best recommendations:
+
+- [How to reduce NodeGroup instanceType Size](/blog/how-to-reduce-nodegroup-instancetype-size)
+- [Best EC2 Instance Type for Running a 203 MB Spring Boot Docker Image](/blog/best-ec2-instance-type-for-running-a-203-mb-springboot-docker-img)
+- [Desired Capacity = 0 or Stopping EC2 Instances](/blog/desired-capacity-0-or-stopping-ec2-instances)
+- [Shut Down your AWS EKS Cluster Temporarily](/blog/shut-down-your-aws-eks-cluster-temporarily)
+- [Cost Optimization for a Small Spring Boot Application on AWS EKS](/blog/cost-optimization-for-a-small-spring-boot-application-on-aws-eks.mdx)
+- [How to push Docker images to AWS ECR using AWS CLI](/blog/how-to-push-docker-images-to-aws-ecr-with-aws-cli)
+
+---
+
+## Project Links:
+- Use my app [here](http://www.omnsystem.com.s3-website-us-east-1.amazonaws.com/)
+- [Order Service Repository](https://github.com/edgarpecero/OMN-Order-Service/) 
+- [Notification Service Repository](https://github.com/edgarpecero/OMN-Notification-Service)
+- [React App Repository](https://github.com/edgarpecero/OMN-Order-Service-React-App) 
+- [Jira board](https://order-management-and-notification.atlassian.net/jira/software/projects/OMN/boards/1) 
+- [Jira board invitation link](https://id.atlassian.com/invite/p/jira-software?id=VbH7aiDRTYujl84_G7rwfA)

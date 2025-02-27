@@ -1,0 +1,188 @@
+---
+mdxname: a4-configuring-aws-cli-and-accessing-your-eks-cluster-on-windows-11.mdx
+title: "Configuring AWS CLI and Accessing Your EKS Cluster on Windows 11"
+publishedAt: "2024-10-30"
+summary: "This guide will cover how to configure the AWS CLI on Windows 11 to access and manage an Amazon EKS cluster. By following these steps, you’ll be able to securely authenticate and interact with your EKS cluster from the command line."
+team:
+  - name: "Edgar Pecero"
+    role: "Full Stack Developer"
+    avatar: "/images/avatar.jpg"
+tag: "Cloud"
+children: []
+---
+
+## Introduction
+
+This guide will cover how to configure the AWS CLI on Windows 11 to access and manage an Amazon EKS cluster. By following these steps, you’ll be able to securely authenticate and interact with your EKS cluster from the command line.
+
+---
+
+## 1. Prerequisites
+
+Before you begin, ensure you have the following:
+
+- **Administrator privileges** on your Windows 11 machine.
+- **AWS CLI version 2** installed and configured (you can follow this guide,if it’s not yet set up).
+- **A configured Amazon EKS cluster**, or permissions to create and access one.
+- **kubectl installed and configured**, as it’s essential for managing Kubernetes clusters.
+
+## 2. Configuring AWS CLI
+
+To start, configure AWS CLI with your credentials so it can access AWS resources.
+
+### Step 1: Open Command Prompt or PowerShell and enter the following command to set up AWS credentials:
+
+<CodeBlock className="my-24"
+    compact
+    codeInstances={[
+        {
+            code: 'aws configure',
+            label: 'aws-configure',
+            language: 'bash'
+        },
+    ]}
+    copyButton
+/>
+
+When prompted, enter your **AWS Access Key ID**, **AWS Secret Access Key**, **region** (e.g., us-west-2), and default output format (e.g., json).
+
+### Step 2: Verify AWS CLI is configured correctly by listing S3 buckets (or any other resource you have access to):
+
+<CodeBlock className="my-24"
+    compact
+    codeInstances={[
+        {
+            code: 'aws s3 ls',
+            label: 'aws s3 ls',
+            language: 'bash'
+        },
+    ]}
+    copyButton
+/>
+
+If the command returns a list of buckets or a similar output, the AWS CLI is configured correctly.
+
+---
+
+## 3. Setting Up Access to Your EKS Cluster
+
+Once AWS CLI is configured, use it to authenticate and access your EKS cluster.
+
+### Step 1: Retrieve Cluster Configuration
+
+Run the following command to update the kubeconfig file with your EKS cluster information:
+
+<CodeBlock className="my-24"
+    compact
+    codeInstances={[
+        {
+            code: 'aws eks update-kubeconfig --region <region> --name <cluster-name>',
+            label: 'aws eks update-kubeconfig --region <region> --name <cluster-name>',
+            language: 'bash'
+        },
+    ]}
+    copyButton
+/>
+
+Replace **region** with your AWS region (e.g., us-west-2) and **cluster-name** with the name of your EKS cluster.
+
+Expected output:
+
+```
+> $ aws eks update-kubeconfig --region us-west-1 --name EKSSaaSCluster
+> Added new context arn:aws:eks:us-west-1:7XXXXXXXXXXXXXX:cluster/EKSSaaSCluster to C:\Users\a848733\.kube\config
+```
+
+This command generates a kubeconfig file that kubectl uses to authenticate to your EKS cluster.
+
+### Step 2: Verifying the kubeconfig Setup
+
+Check if `kubectl` is connected to the EKS cluster by running:
+
+<CodeBlock className="my-24"
+    compact
+    codeInstances={[
+        {
+            code: 'kubectl cluster-info',
+            label: 'kubectl cluster-info',
+            language: 'bash'
+        },
+    ]}
+    copyButton
+/>
+
+This should display information about your EKS cluster, confirming a successful connection.
+
+---
+
+## 4. Testing Your Setup
+
+Confirm that both AWS CLI and `kubectl` can interact with the cluster.
+
+### Step 1: List Nodes
+
+Use `kubectl` to list the nodes in your cluster:
+
+<CodeBlock className="my-24"
+    compact
+    codeInstances={[
+        {
+            code: 'kubectl get nodes',
+            label: 'kubectl get nodes',
+            language: 'bash'
+        },
+    ]}
+    copyButton
+/>
+
+This command should return a list of nodes, indicating that you have access to the cluster.
+
+Expected output:
+
+```
+> $ kubectl get nodes
+> NAME                                           STATUS   ROLES    AGE     VERSION
+> ip-192-168-141-33.us-west-1.compute.internal   Ready    <none>   5d21h   v1.31.0-eks-a737599
+> ip-192-168-204-92.us-west-1.compute.internal   Ready    <none>   5d21h   v1.31.0-eks-a737599
+```
+
+### Step 2: Run a Sample Command
+
+To test further, try deploying a basic resource (e.g., a simple pod or namespace):
+
+<CodeBlock className="my-24"
+    compact
+    codeInstances={[
+        {
+            code: 'kubectl create namespace test-environment',
+            label: 'kubectl create namespace test-environment',
+            language: 'bash'
+        },
+    ]}
+    copyButton
+/>
+
+Use kubectl get namespaces to verify the creation.
+
+Expected output:
+
+```
+$ kubectl get namespaces
+> NAME              STATUS   AGE
+> default           Active   5d21h
+> kube-node-lease   Active   5d21h
+> kube-public       Active   5d21h
+> kube-system       Active   5d21h
+```
+
+## 5. Conclusion
+
+This post provided a walkthrough of configuring AWS CLI and connecting it to an Amazon EKS cluster on Windows 11. With this setup, you can manage and monitor your EKS cluster directly from the command line, giving you greater flexibility and control over your Kubernetes resources.
+
+Thank you for reading, and happy managing!
+
+
+---
+
+- Main Project page: [Scalable Saas on AWS with Springboot, React, Kubernetes](/blog/build-saas-on-AWS)
+- Next Step: [Setting Up Java and Maven for Your Development Environment](/blog/setting-up-java-and-maven-for-your-development-environment)

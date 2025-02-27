@@ -1,0 +1,65 @@
+---
+mdxname: a3-automating-an-amazon-vpc-for-eks-with-cloudformation.mdx
+title: "Automating an Amazon VPC for EKS with CloudFormation"
+publishedAt: "2024-10-29"
+summary: "Microservices-based order management and notification platform for e-commerce, built with Spring Boot (Java) and React. Leveraging AWS, Kubernetes, and Terraform for scalability, resilience, and automation. Includes CI/CD pipeline, unit testing, code quality, monitoring (Prometheus/Grafana), centralized logging (ELK/EFK), and fault-tolerant mechanisms like Circuit Breaker and Retry patterns"
+team:
+  - name: "Edgar Pecero"
+    role: "Full Stack Developer"
+    avatar: "/images/avatar.jpg"
+tag: "Cloud"
+children: []
+---
+
+# Automating an Amazon VPC for EKS with CloudFormation
+
+Creating a VPC for an Amazon EKS cluster is critical, and AWS provides a CloudFormation template in the [EKS VPC guide](https://docs.aws.amazon.com/eks/latest/userguide/creating-a-vpc.html) to automate this process—saving you from manual configuration hassles.
+
+## Understanding the VPC from the CloudFormation Template
+
+The template builds a robust VPC designed for EKS:
+- **VPC**: A virtual network with a default CIDR block like `10.0.0.0/16`, giving you ample IP space.
+- **Subnets**: Spread across at least two Availability Zones (AZs) for high availability:
+  - **Public Subnets**: Host resources like load balancers, with CIDRs like `10.0.0.0/24`.
+  - **Private Subnets**: House EKS worker nodes, isolated from the public internet, e.g., `10.0.64.0/24`.
+- **NAT Gateways**: Deployed in public subnets, allowing private subnets to pull container images or fetch updates without exposing nodes.
+- **Internet Gateway**: Attached to the VPC, enabling public subnet traffic to the internet.
+- **Route Tables**: Configured to route traffic efficiently—public subnets to the internet gateway, private subnets via NAT gateways.
+
+This architecture balances security (private nodes) and connectivity (public access for load balancers), meeting EKS best practices.
+
+## Deploying the VPC with CloudFormation
+
+Instead of manually piecing this together in the AWS Console, CloudFormation automates it. Here’s how to use it:
+1. **Get the Template**: Download the YAML file from the [EKS VPC guide](https://docs.aws.amazon.com/eks/latest/userguide/creating-a-vpc.html).
+2. **Access CloudFormation**: In the AWS Console, go to CloudFormation, click "Create Stack," and choose "With new resources."
+3. **Upload and Configure**: Upload the template, then input parameters like:
+   - VPC CIDR (e.g., `10.0.0.0/16`).
+   - Subnet CIDRs for public and private subnets.
+   - AZs (e.g., `us-west-2a`, `us-west-2b`).
+4. **Deploy**: Review settings, launch the stack, and wait a few minutes as CloudFormation builds the VPC.
+5. **Retrieve Outputs**: After completion, check the "Outputs" tab for the VPC ID and subnet IDs—key details for your EKS cluster setup.
+
+This approach ensures consistency and eliminates manual missteps.
+
+## Permissions for Clusters, Node Groups, and Pods
+
+To integrate this VPC with EKS, attach the right IAM permissions:
+- **EKS Cluster**: The control plane needs an IAM role with:
+  - `AmazonEKSClusterPolicy`: Manages VPC resources and subnets for the cluster.
+- **Node Groups**: Worker nodes require an IAM role with:
+  - `AmazonEKSWorkerNodePolicy`: Enables nodes to join the cluster.
+  - `AmazonEC2ContainerRegistryReadOnly`: Allows pulling images from Amazon ECR.
+  - `AmazonEKS_CNI_Policy`: Configures networking (e.g., VPC CNI plugin) for pod communication.
+- **Pods**: For pods needing AWS service access (e.g., S3), use IAM Roles for Service Accounts (IRSA):
+  - Create an IAM policy with specific permissions (e.g., `s3:GetObject`).
+  - Associate it with a Kubernetes service account tied to the pod.
+
+## Conclusion
+
+Using CloudFormation to automate your EKS VPC setup streamlines the process, delivering a secure and scalable network with minimal effort. Pairing this with the right IAM permissions ensures your cluster, node groups, and pods operate flawlessly. Whether you're spinning up a test environment or a production cluster, this approach sets you up for success with EKS—fast, repeatable, and error-free.
+
+---
+
+- Main Project page: [Scalable Saas on AWS with Springboot, React, Kubernetes](/blog/build-saas-on-AWS)
+- Next Step: [Configuring AWS CLI and Accessing Your EKS Cluster on Windows 11](/blog/a4-configuring-aws-cli-and-accessing-your-eks-cluster-on-windows-11)
