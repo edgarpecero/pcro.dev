@@ -75,7 +75,8 @@ export async function GET(request: Request) {
                 textWrap: "balance",
               }}
             >
-              {person.name}
+              {/* {person.name} */}
+              pcro.dev
             </span>
             <span
               style={{
@@ -86,7 +87,8 @@ export async function GET(request: Request) {
                 opacity: "0.6",
               }}
             >
-              {person.role}
+              {/* {person.role} */}
+              Software Developer
             </span>
           </div>
         </div>
